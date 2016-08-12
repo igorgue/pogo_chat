@@ -1585,6 +1585,8 @@ channel.on("new_msg", function (payload) {
   } else {
     messagesContainer.append("<div data-time=\"" + Date() + "\" class=\"reply\"><div class=\"username\"><img src=\"images/pokemons/" + payload.username + ".png\" alt=\"\" /><h1>" + payload.username + "</h1></div><div class=\"the-reply\">" + payload.body + "</div></div>");
   }
+
+  messagesContainer.animate({ scrollTop: messagesContainer.prop("scrollHeight") }, 500);
 });
 
 channel.on("random_pokemon", function (payload) {
