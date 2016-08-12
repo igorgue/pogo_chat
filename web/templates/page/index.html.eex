@@ -1,5 +1,13 @@
 <div class="chat">
-  <div class="headline">pogochat</div>
+  <div class="headline">
+    <div class="logo">
+      pogochat
+    </div>
+
+    <div class="count">
+      5
+    </div>
+  </div>
   <div class="chat-box">
 
   </div>

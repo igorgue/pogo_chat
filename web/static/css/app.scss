@@ -17,10 +17,21 @@ body {
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
-    text-align: center;
     background: #28b6c1;
     text-transform: uppercase;
     letter-spacing: 1px;
+    overflow: hidden;
+
+    .logo {
+      float: left;
+      padding: 0px 0px 0px 12px;
+    }
+
+    .count {
+      float: right;
+      padding-right: 12px;
+      font-size: 13px;
+    }
   }
 
   .chat {
