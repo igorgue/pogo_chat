@@ -98,6 +98,12 @@ channel.on("random_pokemon", payload => {
   $('label[for=chat-input]').html(chatName)
 })
 
+channel.on("wild_pokemon_appeared", payload => {
+  if(payload.pokemon !== chatName) {
+    console.log(`a wild ${payload.wild_pokemon} appeared`)
+  }
+})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })

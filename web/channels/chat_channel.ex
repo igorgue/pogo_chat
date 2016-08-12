@@ -31,7 +31,10 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_info(:after_join, socket) do
-    push socket, "random_pokemon", %{random_pokemon: Enum.random(pokemon())}
+    socket = assign(socket, :pokemon, Enum.random(pokemon()))
+
+    push socket, "random_pokemon", %{random_pokemon: socket.assigns[:pokemon]}
+    broadcast! socket, "wild_pokemon_appeared", %{wild_pokemon: socket.assigns[:pokemon]}
 
     {:noreply, socket}
   end
