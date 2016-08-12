@@ -32,8 +32,10 @@ defmodule PogoChat.ChatChannel do
 
   def handle_info(:after_join, socket) do
     socket = assign(socket, :pokemon, Enum.random(pokemon()))
+    socket = assign(socket, :uuid, UUID.uuid1())
 
     push socket, "random_pokemon", %{random_pokemon: socket.assigns[:pokemon]}
+    push socket, "uuid", %{uuid: socket.assigns[:uuid]}
     broadcast! socket, "wild_pokemon_appeared", %{wild_pokemon: socket.assigns[:pokemon]}
 
     {:noreply, socket}
@@ -68,7 +70,6 @@ defmodule PogoChat.ChatChannel do
     )
 
     Logger.debug "Distance: #{distance}"
-
 
     if distance <= close_by_distance do
       Logger.debug "Distance in reach"

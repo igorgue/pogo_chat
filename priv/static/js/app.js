@@ -1544,6 +1544,7 @@ var coords = { lat: null, long: null };
 var chatName = null;
 var latHardcoded = $("#lat-input");
 var longHardcoded = $("#long-input");
+var uuid = null;
 
 geolocationWatcher.watchPosition(function (position) {
   if (latHardcoded.val() !== '' || longHardcoded.val() !== '') {
@@ -1564,13 +1565,26 @@ chatInput.on("keypress", function (event) {
       coords.long = parseFloat(longHardcoded.val());
     }
 
-    channel.push("new_msg", { body: chatInput.val(), coords: coords, username: chatName });
+    var data = {
+      body: chatInput.val(),
+      coords: coords,
+      username: chatName,
+      uuid: uuid
+    };
+
+    channel.push("new_msg", data);
     chatInput.val("");
   }
 });
 
 channel.on("new_msg", function (payload) {
-  messagesContainer.append("<br/>[" + Date() + "] <strong>" + payload.username + ":</strong> " + payload.body);
+  var is_yours = payload.uuid === uuid;
+
+  if (is_yours) {
+    messagesContainer.append("<br/>!!! [" + new Date().toLocaleDateString() + "] <strong>" + payload.username + ":</strong> " + payload.body);
+  } else {
+    messagesContainer.append("<br/>[" + new Date().toLocaleDateString() + "] <strong>" + payload.username + ":</strong> " + payload.body);
+  }
 });
 
 channel.on("random_pokemon", function (payload) {
@@ -1581,9 +1595,13 @@ channel.on("random_pokemon", function (payload) {
 });
 
 channel.on("wild_pokemon_appeared", function (payload) {
-  if (payload.pokemon !== chatName) {
-    console.log("a wild " + payload.wild_pokemon + " appeared");
-  }
+  console.log("a wild " + payload.wild_pokemon + " appeared");
+});
+
+channel.on("uuid", function (payload) {
+  console.log("Your uuid is " + payload.uuid);
+
+  uuid = payload.uuid;
 });
 
 channel.join().receive("ok", function (resp) {

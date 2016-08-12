@@ -32,6 +32,7 @@ defmodule PogoChat.Mixfile do
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:geocalc, "~> 0.5"}]
+     {:geocalc, "~> 0.5"},
+     {:uuid, "~> 1.1" }]
   end
 end
