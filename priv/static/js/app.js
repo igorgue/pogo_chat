@@ -1574,10 +1574,8 @@ channel.on("new_msg", function (payload) {
 });
 
 channel.on("random_pokemon", function (payload) {
-  console.log("Random pokemon: " + payload.random_pokemon);
-
   chatName = payload.random_pokemon;
-  chatInput.attr('data-username', chatName);
+  chatInput.attr("placeholder", "Hi " + chatName).attr('data-username', chatName);
 });
 
 channel.join().receive("ok", function (resp) {

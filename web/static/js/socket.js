@@ -92,10 +92,8 @@ channel.on("new_msg", payload => {
 })
 
 channel.on("random_pokemon", payload => {
-  console.log(`Random pokemon: ${payload.random_pokemon}`)
-
   chatName = payload.random_pokemon
-  chatInput.attr('data-username', chatName)
+  chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
 })
 
 channel.join()
