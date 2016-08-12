@@ -1,7 +1,14 @@
-<div id="messages"></div>
-<label for="chat-input"></label> <input id="chat-input" type="text"></input>
+<div class="chat">
+  <div class="headline">pogochat</div>
+  <div class="chat-box">
 
-</br>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" class="chat-thing" placeholder="Was up" autofocus>
+  </div>
+</div>
+
 
 <input id="lat-input" placeholder="lat hardcoded"></input>
 <input id="long-input" placeholder="long hardcoded"></input>

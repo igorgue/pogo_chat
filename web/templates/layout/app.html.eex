@@ -13,9 +13,9 @@
 
   <body>
     <div class="container">
-      <main role="main">
+      <div class="main">
         <%= render @view_module, @view_template, assigns %>
-      </main>
+      </div>
     </div> <!-- /container -->
 
     <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>

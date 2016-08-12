@@ -1577,7 +1577,7 @@ channel.on("random_pokemon", function (payload) {
   console.log("Random pokemon: " + payload.random_pokemon);
 
   chatName = payload.random_pokemon;
-  $('label[for=chat-input]').html(chatName);
+  chatInput.attr('data-username', chatName);
 });
 
 channel.join().receive("ok", function (resp) {

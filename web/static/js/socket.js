@@ -55,8 +55,8 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("pogochat", {})
-let chatInput = $("#chat-input")
-let messagesContainer = $("#messages")
+let chatInput = $(".chat-thing")
+let messagesContainer = $(".chat-box")
 let geolocationWatcher = navigator.geolocation
 let coords = {lat: null, long: null}
 let chatName = null
@@ -88,14 +88,14 @@ chatInput.on("keypress", event => {
 })
 
 channel.on("new_msg", payload => {
-  messagesContainer.append(`<br/>[${Date()}] <strong>${payload.username}:</strong> ${payload.body}`)
+  messagesContainer.append(`<div data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
 })
 
 channel.on("random_pokemon", payload => {
   console.log(`Random pokemon: ${payload.random_pokemon}`)
 
   chatName = payload.random_pokemon
-  $('label[for=chat-input]').html(chatName)
+  chatInput.attr('data-username', chatName)
 })
 
 channel.join()
