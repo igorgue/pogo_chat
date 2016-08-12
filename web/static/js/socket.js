@@ -55,8 +55,8 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("pogochat", {})
-let chatInput = $("#chat-input")
-let messagesContainer = $("#messages")
+let chatInput = $(".chat-thing")
+let messagesContainer = $(".chat-box")
 let geolocationWatcher = navigator.geolocation
 let coords = {lat: null, long: null}
 let chatName = null
@@ -99,17 +99,15 @@ channel.on("new_msg", payload => {
   let is_yours = payload.uuid === uuid
 
   if (is_yours) {
-    messagesContainer.append(`<br/>!!! [${new Date().toLocaleDateString()}] <strong>${payload.username}:</strong> ${payload.body}`)
+    messagesContainer.append(`<div data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   } else {
-    messagesContainer.append(`<br/>[${new Date().toLocaleDateString()}] <strong>${payload.username}:</strong> ${payload.body}`)
+    messagesContainer.append(`<div data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   }
 })
 
 channel.on("random_pokemon", payload => {
-  console.log(`Random pokemon: ${payload.random_pokemon}`)
-
   chatName = payload.random_pokemon
-  $('label[for=chat-input]').html(chatName)
+  chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
 })
 
 channel.on("wild_pokemon_appeared", payload => {
