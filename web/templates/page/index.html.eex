@@ -1,0 +1,7 @@
+<div id="messages"></div>
+<label for="chat-input"></label> <input id="chat-input" type="text"></input>
+
+</br>
+
+<input id="lat-input" placeholder="lat hardcoded"></input>
+<input id="long-input" placeholder="long hardcoded"></input>
