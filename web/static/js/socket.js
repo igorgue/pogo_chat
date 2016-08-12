@@ -98,6 +98,8 @@ chatInput.on("keypress", event => {
 channel.on("new_msg", payload => {
   let is_yours = payload.uuid === uuid
 
+  console.log(`Distance from message ${payload.distance_from_message}`)
+
   if (is_yours) {
     messagesContainer.append(`<div data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   } else {
@@ -123,7 +125,11 @@ channel.on("uuid", payload => {
 })
 
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+  .receive("ok", resp => {
+    console.log("Joined successfully", resp)
+  })
+  .receive("error", resp => {
+    console.log("Unable to join", resp)
+  })
 
 export default socket

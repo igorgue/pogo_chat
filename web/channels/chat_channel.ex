@@ -3,6 +3,8 @@ defmodule PogoChat.ChatChannel do
 
   use Phoenix.Channel
 
+  alias PogoChat.Presence
+
   defp pokemon() do
     [
       "bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie",
@@ -23,20 +25,25 @@ defmodule PogoChat.ChatChannel do
       "mew"
     ]
   end
+
+  defp initialize_socket(socket) do
+    socket = assign(socket, :uuid, UUID.uuid1())
+    socket = assign(socket, :pokemon, Enum.random(pokemon()))
+
+    socket
+  end
   
   def join(_, _message, socket) do
     send(self, :after_join)
 
-    {:ok, socket}
+    {:ok, initialize_socket(socket)}
   end
 
   def handle_info(:after_join, socket) do
-    socket = assign(socket, :pokemon, Enum.random(pokemon()))
-    socket = assign(socket, :uuid, UUID.uuid1())
+    push socket, "uuid", %{uuid: socket.assigns.uuid}
+    push socket, "random_pokemon", %{random_pokemon: socket.assigns.pokemon}
 
-    push socket, "random_pokemon", %{random_pokemon: socket.assigns[:pokemon]}
-    push socket, "uuid", %{uuid: socket.assigns[:uuid]}
-    broadcast! socket, "wild_pokemon_appeared", %{wild_pokemon: socket.assigns[:pokemon]}
+    broadcast! socket, "wild_pokemon_appeared", %{wild_pokemon: socket.assigns.pokemon}
 
     {:noreply, socket}
   end
@@ -62,15 +69,19 @@ defmodule PogoChat.ChatChannel do
   intercept ["new_msg"]
 
   def handle_out("new_msg", payload, socket) do
+    # Calculate distance from message
     close_by_distance = 500.00
 
     distance = Geocalc.distance_between(
       [payload["coords"]["lat"], payload["coords"]["long"]],
-      [socket.assigns[:coords]["lat"], socket.assigns[:coords]["long"]]
+      [socket.assigns.coords["lat"], socket.assigns.coords["long"]]
     )
+
+    payload = put_in payload["distance_from_message"], distance
 
     Logger.debug "Distance: #{distance}"
 
+    # Send or not send the message
     if distance <= close_by_distance do
       Logger.debug "Distance in reach"
 

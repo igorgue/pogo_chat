@@ -12,6 +12,8 @@ defmodule PogoChat do
       supervisor(PogoChat.Endpoint, []),
       # Start your own worker by calling: PogoChat.Worker.start_link(arg1, arg2, arg3)
       # worker(PogoChat.Worker, [arg1, arg2, arg3]),
+      # Start presense
+      supervisor(PogoChat.Presence, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

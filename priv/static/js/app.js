@@ -1580,6 +1580,8 @@ chatInput.on("keypress", function (event) {
 channel.on("new_msg", function (payload) {
   var is_yours = payload.uuid === uuid;
 
+  console.log("Distance from message " + payload.distance_from_message);
+
   if (is_yours) {
     messagesContainer.append("<div data-time=\"" + Date() + "\" class=\"reply  push-message\"><div class=\"username\"><img src=\"images/pokemons/" + payload.username + ".png\" alt=\"\" /><h1>" + payload.username + "</h1></div><div class=\"the-reply\">" + payload.body + "</div></div>");
   } else {
