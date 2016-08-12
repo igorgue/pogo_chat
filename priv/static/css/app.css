@@ -66,11 +66,12 @@ body {
           float: left;
           font-size: 11px;
           font-weight: 400;
-          margin: 8px 0px 0px 4px; }
-        /* line 75, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+          margin: 8px 0px 0px 4px;
+          text-transform: capitalize; }
+        /* line 76, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
         .main .chat .chat-box .reply .username img {
           float: left; }
-      /* line 81, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+      /* line 82, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
       .main .chat .chat-box .reply .the-reply {
         position: relative;
         float: left;
@@ -86,25 +87,25 @@ body {
         font-size: 12px;
         line-height: 20px;
         color: #606677; }
-    /* line 100, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+    /* line 101, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
     .main .chat .chat-box .push-message .username {
       text-align: right;
       margin: 0 0 6px 30%;
       overflow: hidden; }
-      /* line 105, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+      /* line 106, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
       .main .chat .chat-box .push-message .username h1 {
         float: right;
         font-size: 11px;
         font-weight: 400;
         margin: 8px 4px 0px 0px; }
-      /* line 112, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+      /* line 113, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
       .main .chat .chat-box .push-message .username img {
         float: right; }
-    /* line 117, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+    /* line 118, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
     .main .chat .chat-box .push-message .the-reply {
       margin: 0 0 15px 30%;
       background: #94DBEE; }
-  /* line 125, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+  /* line 126, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
   .main .chat .chat-input {
     position: absolute;
     left: 0;
@@ -114,7 +115,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     background: radial-gradient(ellipse at center, #ffffff 0%, #f1f1f1 100%); }
-    /* line 135, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
+    /* line 136, /Users/arubinofaux/vault/pogo_chat/web/static/css/app.scss */
     .main .chat .chat-input .chat-thing {
       position: relative;
       width: 100%;
