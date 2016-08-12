@@ -1537,8 +1537,8 @@ socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
 var channel = socket.channel("pogochat", {});
-var chatInput = $("#chat-input");
-var messagesContainer = $("#messages");
+var chatInput = $(".chat-thing");
+var messagesContainer = $(".chat-box");
 var geolocationWatcher = navigator.geolocation;
 var coords = { lat: null, long: null };
 var chatName = null;
@@ -1570,7 +1570,7 @@ chatInput.on("keypress", function (event) {
 });
 
 channel.on("new_msg", function (payload) {
-  messagesContainer.append("<br/>[" + Date() + "] <strong>" + payload.username + ":</strong> " + payload.body);
+  messagesContainer.append("<div data-time=\"" + Date() + "\" class=\"reply\"><div class=\"username\"><img src=\"images/pokemons/" + payload.username + ".png\" alt=\"\" /><h1>" + payload.username + "</h1></div><div class=\"the-reply\">" + payload.body + "</div></div>");
 });
 
 channel.on("random_pokemon", function (payload) {
