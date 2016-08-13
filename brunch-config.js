@@ -58,7 +58,7 @@ exports.config = {
     sass: {
 //       mode: "native" // This is the important part!
       debug: 'comments',
-      mode: 'ruby'
+      mode: 'native'
     }
   },
 

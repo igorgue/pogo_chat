@@ -1,4 +1,22 @@
-<div class="chat">
+<div class="select-team">
+  <div class="headline">
+    <div class="logo">
+      Choose your team
+    </div>
+  </div>
+  <div class="teams">
+    <div class="instinct">
+      instinct
+    </div>
+    <div class="mystic">
+      mystic
+    </div>
+    <div class="valor">
+      valor
+    </div>
+  </div>
+</div>
+<div class="chat" style="display: none;">
   <div class="headline">
     <div class="logo">
       pogochat
