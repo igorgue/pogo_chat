@@ -1,18 +1,18 @@
 <div class="select-team">
   <div class="headline">
-    <div class="logo">
+    <div class="logo center">
       Choose your team
     </div>
   </div>
   <div class="teams">
-    <div class="instinct">
-      instinct
+    <div class="instinct" data-team="instinct">
+      <img src="images/teams/instinct.png" alt="" />
     </div>
-    <div class="mystic">
-      mystic
+    <div class="mystic" data-team="mystic">
+      <img src="images/teams/mystic.png" alt="" />
     </div>
-    <div class="valor">
-      valor
+    <div class="valor" data-team="valor">
+      <img src="images/teams/valor.png" alt="" />
     </div>
   </div>
 </div>

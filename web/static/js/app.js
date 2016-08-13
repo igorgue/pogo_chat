@@ -19,3 +19,27 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+
+
+function teamResize() {
+  $(".teams div").each(function( index, data ) {
+    var class_name = $(this).attr("class");
+    var holder = $('.'+class_name).height();
+    var img = $('.'+class_name+' img').height();
+    var hHeight = (holder - img) / 2;
+    $('.'+class_name+' img').css("padding-top", hHeight+"px");
+  });
+}
+
+teamResize();
+
+$( window ).resize(function() {
+  teamResize();
+});
+
+// var holder = $(this).height();
+// console.log(holder);
+// var img = $(this+' img').height();
+// console.log(img);
+// var hHeight = (holder - img) / 2;
+// console.log(hHeight);
