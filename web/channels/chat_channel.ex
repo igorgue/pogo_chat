@@ -78,7 +78,7 @@ defmodule PogoChat.ChatChannel do
 
       payload = put_in payload["distance_from_message"], distance
 
-      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(Enum.uniq(socket.assigns.nearby_users_ids))}
+      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
       push socket, "new_msg", payload
 
       socket
@@ -102,7 +102,7 @@ defmodule PogoChat.ChatChannel do
         socket
       end
 
-      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(Enum.uniq(socket.assigns.nearby_users_ids))}
+      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
 
       {:noreply, socket}
     else

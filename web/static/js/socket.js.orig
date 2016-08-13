@@ -63,19 +63,15 @@ socket.connect()
 let channel = socket.channel("pogochat", {})
 let chatInput = $(".chat-thing")
 let messagesContainer = $(".chat-box")
-let geolocationService = navigator.geolocation
+let geolocationWatcher = navigator.geolocation
 let coords = {lat: null, long: null}
 let chatName = null
 let latHardcoded = $("#lat-input")
 let longHardcoded = $("#long-input")
 let uuid = null
-let nearbyUsersCount = 0
-let userCount = $(".count")
-let geoOptions = {
-  enableHighAccuracy: true, 
-  maximumAge: 30000, 
-  timeout: 27000
-}
+<<<<<<< HEAD
+let nearby_users_count = 0
+=======
 
 var reply = database.queryAll("reply");
 
@@ -85,7 +81,20 @@ reply.forEach(function(item) {
   } else {
     messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
   }
+});
+
+geolocationWatcher.watchPosition(position => {
+  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
+    coords.lat = parseFloat(latHardcoded.val())
+    coords.long = parseFloat(longHardcoded.val())
+  } else {
+    coords.lat = position.coords.latitude
+    coords.long = position.coords.longitude
+  }
+
+  channel.push("announce_location", {coords: coords})
 })
+>>>>>>> save-data
 
 chatInput.on("keypress", event => {
   if(event.keyCode === 13) {
@@ -143,8 +152,9 @@ channel.on("uuid", payload => {
 })
 
 channel.on("nearby_users_count", payload => {
-  nearbyUsersCount = payload["nearby_users_count"]
-  userCount.html(nearbyUsersCount)
+  console.log(`Your users count is ${payload.nearby_users_count}`)
+
+  nearby_users_count = payload
 })
 
 channel.join()
@@ -155,39 +165,25 @@ channel.join()
     console.log("Unable to join", resp)
   })
 
-  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
+<<<<<<< HEAD
+messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+
+geolocationWatcher.watchPosition(position => {
+  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
+    coords.lat = parseFloat(latHardcoded.val())
+    coords.long = parseFloat(longHardcoded.val())
+  } else {
+    coords.lat = position.coords.latitude
+    coords.long = position.coords.longitude
+  }
+
+  if(coords !== {lat: null, long: null}){
+    channel.push("announce_location", {uuid: uuid, coords: coords})
+  }
+})
+=======
+  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
-
-function geoError() {
-  console.error("Sorry, no position available.");
-}
-
-geolocationService.watchPosition(position => {
-  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-    coords.lat = parseFloat(latHardcoded.val())
-    coords.long = parseFloat(longHardcoded.val())
-  } else {
-    coords.lat = position.coords.latitude
-    coords.long = position.coords.longitude
-  }
-
-  if(coords !== {lat: null, long: null}){
-    channel.push("announce_location", {uuid: uuid, coords: coords})
-  }
-}, geoError, geoOptions)
-
-geolocationService.getCurrentPosition(position => {
-  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-    coords.lat = parseFloat(latHardcoded.val())
-    coords.long = parseFloat(longHardcoded.val())
-  } else {
-    coords.lat = position.coords.latitude
-    coords.long = position.coords.longitude
-  }
-
-  if(coords !== {lat: null, long: null}){
-    channel.push("announce_location", {uuid: uuid, coords: coords})
-  }
-}, geoError, geoOptions)
+>>>>>>> save-data
 
 export default socket
