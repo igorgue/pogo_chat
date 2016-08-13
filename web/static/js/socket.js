@@ -7,6 +7,20 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
+// Initialise. If the database doesn't exist, it is created
+var database = new localStorageDB("chat", localStorage);
+if(! database.tableExists("reply")) {
+  database.createTable("reply", ["username", "content", "self"]);
+  database.commit();
+}
+if(database.tableExists("user")) {
+  $('.select-team').hide();
+  $('.chat').show();
+} else {
+  database.createTable("user", ["username", "uuid", "team"]);
+  database.insert("user", {id: 1, username: "username", uuid: "uuid"});
+  database.commit();
+}
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -64,6 +78,16 @@ let latHardcoded = $("#lat-input")
 let longHardcoded = $("#long-input")
 let uuid = null
 
+var reply = database.queryAll("reply");
+
+reply.forEach(function(item) {
+  if (item['self'] == 'true') {
+    messagesContainer.append(`<div class="reply push-message"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+  } else {
+    messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+  }
+});
+
 geolocationWatcher.watchPosition(position => {
   if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
     coords.lat = parseFloat(latHardcoded.val())
@@ -101,10 +125,16 @@ channel.on("new_msg", payload => {
   console.log(`Distance from message ${payload.distance_from_message}`)
 
   if (is_yours) {
+    var self = "true";
     messagesContainer.append(`<div data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   } else {
+    var self = "false";
     messagesContainer.append(`<div data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   }
+
+  // Save the reply
+  database.insert("reply", {username: payload.username, content: payload.body, self: self});
+  database.commit();
 
   messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
 })
@@ -112,6 +142,11 @@ channel.on("new_msg", payload => {
 channel.on("random_pokemon", payload => {
   chatName = payload.random_pokemon
   chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
+
+  database.update("user", {id: 1}, function(row) {
+    row.username = payload.wild_pokemon;
+    return row;
+  });
 })
 
 channel.on("wild_pokemon_appeared", payload => {
@@ -122,6 +157,12 @@ channel.on("uuid", payload => {
   console.log(`Your uuid is ${payload.uuid}`)
 
   uuid = payload.uuid
+
+  database.update("user", {id: 1}, function(row) {
+    row.uuid = payload.uuid;
+    return row;
+  });
+
 })
 
 channel.join()
@@ -132,6 +173,7 @@ channel.join()
     console.log("Unable to join", resp)
   })
 
+  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
 
 export default socket

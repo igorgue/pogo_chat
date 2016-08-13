@@ -41,7 +41,7 @@ $( window ).resize(function() {
 // Handle team selection
 $(".teams div").click(function() {
   var team = $(this).data("team");
-  console.log(team);
+  $(".chat-thing").attr('data-team', team);
 
   $('.select-team').hide();
   $('.chat').show();
