@@ -13,14 +13,6 @@ if(! database.tableExists("reply")) {
   database.createTable("reply", ["username", "content", "self"]);
   database.commit();
 }
-if(database.tableExists("user")) {
-  $('.select-team').hide();
-  $('.chat').show();
-} else {
-  database.createTable("user", ["username", "uuid", "team"]);
-  database.insert("user", {id: 1, username: "username", uuid: "uuid"});
-  database.commit();
-}
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -142,11 +134,6 @@ channel.on("new_msg", payload => {
 channel.on("random_pokemon", payload => {
   chatName = payload.random_pokemon
   chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
-
-  database.update("user", {id: 1}, function(row) {
-    row.username = payload.wild_pokemon;
-    return row;
-  });
 })
 
 channel.on("wild_pokemon_appeared", payload => {
@@ -157,12 +144,7 @@ channel.on("uuid", payload => {
   console.log(`Your uuid is ${payload.uuid}`)
 
   uuid = payload.uuid
-
-  database.update("user", {id: 1}, function(row) {
-    row.uuid = payload.uuid;
-    return row;
-  });
-
+  chatInput.attr('data-uuid', payload.uuid)
 })
 
 channel.join()
