@@ -32,6 +32,13 @@ defmodule PogoChat.ChatChannel do
 
     socket
   end
+
+  defp geocalc_distance(point_a, point_b) do
+    Geocalc.distance_between(
+      [point_a["lat"], point_a["long"]],
+      [point_b["lat"], point_b["long"]]
+    )
+  end
   
   def join(_, _message, socket) do
     send(self, :after_join)
@@ -72,11 +79,7 @@ defmodule PogoChat.ChatChannel do
     # Calculate distance from message
     close_by_distance = 500.00
 
-    distance = Geocalc.distance_between(
-      [payload["coords"]["lat"], payload["coords"]["long"]],
-      [socket.assigns.coords["lat"], socket.assigns.coords["long"]]
-    )
-
+    distance = geocalc_distance(payload["coords"], socket.assigns.coords)
     payload = put_in payload["distance_from_message"], distance
 
     Logger.debug "Distance: #{distance}"
