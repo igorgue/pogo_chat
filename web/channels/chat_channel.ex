@@ -3,7 +3,7 @@ defmodule PogoChat.ChatChannel do
 
   use Phoenix.Channel
 
-  alias PogoChat.Presence
+  @close_by_distance 500
 
   defp pokemon() do
     [
@@ -29,6 +29,7 @@ defmodule PogoChat.ChatChannel do
   defp initialize_socket(socket) do
     socket = assign(socket, :uuid, UUID.uuid1())
     socket = assign(socket, :pokemon, Enum.random(pokemon()))
+    socket = assign(socket, :nearby_users_ids, [])
 
     socket
   end
@@ -70,29 +71,57 @@ defmodule PogoChat.ChatChannel do
 
     socket = assign(socket, :coords, payload["coords"])
 
+    broadcast! socket, "announce_location", %{uuid: socket.assigns.uuid, coords: socket.assigns.coords}
+
     {:noreply, socket}
   end
 
-  intercept ["new_msg"]
+  intercept ["new_msg", "announce_location"]
 
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
-    close_by_distance = 500.00
-
     distance = geocalc_distance(payload["coords"], socket.assigns.coords)
     payload = put_in payload["distance_from_message"], distance
 
     Logger.debug "Distance: #{distance}"
 
     # Send or not send the message
-    if distance <= close_by_distance do
+    socket = if distance <= @close_by_distance do
       Logger.debug "Distance in reach"
 
+      socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
+
+      payload = put_in payload["distance_from_message"], distance
+
+      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(Enum.uniq(socket.assigns.nearby_users_ids))}
       push socket, "new_msg", payload
+
+      socket
     else
-      Logger.debug "Distance not in reach"
+      socket
     end
 
     {:noreply, socket}
+  end
+
+  def handle_out("announce_location", payload, socket) do
+    Logger.debug "handle_out:announce_location"
+
+    if Map.has_key?(socket, :coords) do
+      distance = geocalc_distance(payload["coords"], socket.assigns.coords)
+
+      # Send or not send the message
+      socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
+        assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
+      else
+        socket
+      end
+
+      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(Enum.uniq(socket.assigns.nearby_users_ids))}
+
+      {:noreply, socket}
+    else
+      {:noreply, socket}
+    end
   end
 end

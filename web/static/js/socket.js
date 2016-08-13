@@ -63,18 +63,7 @@ let chatName = null
 let latHardcoded = $("#lat-input")
 let longHardcoded = $("#long-input")
 let uuid = null
-
-geolocationWatcher.watchPosition(position => {
-  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-    coords.lat = parseFloat(latHardcoded.val())
-    coords.long = parseFloat(longHardcoded.val())
-  } else {
-    coords.lat = position.coords.latitude
-    coords.long = position.coords.longitude
-  }
-
-  channel.push("announce_location", {coords: coords})
-})
+let nearby_users_count = 0
 
 chatInput.on("keypress", event => {
   if(event.keyCode === 13) {
@@ -124,6 +113,12 @@ channel.on("uuid", payload => {
   uuid = payload.uuid
 })
 
+channel.on("nearby_users_count", payload => {
+  console.log(`Your users count is ${payload.nearby_users_count}`)
+
+  nearby_users_count = payload
+})
+
 channel.join()
   .receive("ok", resp => {
     console.log("Joined successfully", resp)
@@ -132,6 +127,20 @@ channel.join()
     console.log("Unable to join", resp)
   })
 
-  messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+
+geolocationWatcher.watchPosition(position => {
+  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
+    coords.lat = parseFloat(latHardcoded.val())
+    coords.long = parseFloat(longHardcoded.val())
+  } else {
+    coords.lat = position.coords.latitude
+    coords.long = position.coords.longitude
+  }
+
+  if(coords !== {lat: null, long: null}){
+    channel.push("announce_location", {uuid: uuid, coords: coords})
+  }
+})
 
 export default socket
