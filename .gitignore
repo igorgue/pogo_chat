@@ -31,3 +31,5 @@ erl_crash.dump
 # this depending on your deployment strategy.
 /priv/static/css
 /priv/static/js
+
+*.orig
