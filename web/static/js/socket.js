@@ -7,6 +7,12 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
+// Initialise. If the database doesn't exist, it is created
+var database = new localStorageDB("chat", localStorage);
+if(! database.tableExists("reply")) {
+  database.createTable("reply", ["username", "content", "self"]);
+  database.commit();
+}
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -65,6 +71,16 @@ let longHardcoded = $("#long-input")
 let uuid = null
 let nearby_users_count = 0
 
+var reply = database.queryAll("reply");
+
+reply.forEach(function(item) {
+  if (item['self'] == 'true') {
+    messagesContainer.append(`<div class="reply push-message"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+  } else {
+    messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+  }
+})
+
 chatInput.on("keypress", event => {
   if(event.keyCode === 13) {
     if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
@@ -90,10 +106,16 @@ channel.on("new_msg", payload => {
   console.log(`Distance from message ${payload.distance_from_message}`)
 
   if (is_yours) {
+    var self = "true";
     messagesContainer.append(`<div data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   } else {
+    var self = "false";
     messagesContainer.append(`<div data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
   }
+
+  // Save the reply
+  database.insert("reply", {username: payload.username, content: payload.body, self: self});
+  database.commit();
 
   messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
 })
@@ -111,6 +133,7 @@ channel.on("uuid", payload => {
   console.log(`Your uuid is ${payload.uuid}`)
 
   uuid = payload.uuid
+  chatInput.attr('data-uuid', payload.uuid)
 })
 
 channel.on("nearby_users_count", payload => {
@@ -127,7 +150,8 @@ channel.join()
     console.log("Unable to join", resp)
   })
 
-messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+  messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
 
 geolocationWatcher.watchPosition(position => {
   if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {

@@ -19,8 +19,6 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
-// import SQL from "./sql"
-
 
 function teamResize() {
   $(".teams div").each(function( index, data ) {
@@ -41,7 +39,10 @@ $( window ).resize(function() {
 // Handle team selection
 $(".teams div").click(function() {
   var team = $(this).data("team");
-  console.log(team);
+  $(".chat-thing").attr('data-team', team);
+
+  // brand the chat view
+  $(".headline").addClass(team+"-background");
 
   $('.select-team').hide();
   $('.chat').show();
