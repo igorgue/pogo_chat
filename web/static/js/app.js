@@ -37,6 +37,15 @@ $( window ).resize(function() {
   teamResize();
 });
 
+// Handle team selection
+$(".teams div").click(function() {
+  var team = $(this).data("team");
+  console.log(team);
+
+  $('.select-team').hide();
+  $('.chat').show();
+});
+
 // var holder = $(this).height();
 // console.log(holder);
 // var img = $(this+' img').height();

@@ -1,9 +1,4 @@
 <div class="select-team">
-  <div class="headline">
-    <div class="logo center">
-      Choose your team
-    </div>
-  </div>
   <div class="teams">
     <div class="instinct" data-team="instinct">
       <img src="images/teams/instinct.png" alt="" />
@@ -36,5 +31,7 @@
 </div>
 
 
-<input id="lat-input" placeholder="lat hardcoded"></input>
-<input id="long-input" placeholder="long hardcoded"></input>
+<div style="display: none;">
+  <input id="lat-input" placeholder="lat hardcoded"></input>
+  <input id="long-input" placeholder="long hardcoded"></input>
+</div>
