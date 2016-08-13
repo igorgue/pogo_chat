@@ -132,4 +132,6 @@ channel.join()
     console.log("Unable to join", resp)
   })
 
+  messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+
 export default socket

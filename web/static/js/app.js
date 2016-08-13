@@ -19,6 +19,7 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+// import SQL from "./sql"
 
 
 function teamResize() {
@@ -45,10 +46,3 @@ $(".teams div").click(function() {
   $('.select-team').hide();
   $('.chat').show();
 });
-
-// var holder = $(this).height();
-// console.log(holder);
-// var img = $(this+' img').height();
-// console.log(img);
-// var hHeight = (holder - img) / 2;
-// console.log(hHeight);
