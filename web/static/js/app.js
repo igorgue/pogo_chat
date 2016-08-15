@@ -47,3 +47,11 @@ $(".teams div").click(function() {
   $('.select-team').hide();
   $('.chat').show();
 });
+
+// Handle main menu
+$(".close-button").click(function() {
+  $('.main-menu').css("display", "none");
+});
+$(".poke-button").click(function() {
+  $('.main-menu').css("display", "flex");
+});

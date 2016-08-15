@@ -9,10 +9,41 @@
 
     <title>PogoChat!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
   </head>
 
   <body>
     <div class="main">
+      <div class="main-menu" data-ix="main-menu-startup" style="opacity: 1; transition: opacity 400ms;">
+        <div class="settings-and-tips-div">
+          <a class="setting-and-tips-link w-inline-block" href="#">
+            <div class="blue-font">Settings</div><img class="icon" src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579b9da026366cb0486d1ffe_settings-2.svg" width="20"></a>
+          <a class="setting-and-tips-link w-inline-block" href="#">
+            <div class="blue-font">Tips</div><img class="icon" src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579b9e2b56ea2dba79c3c3c8_question-mark.svg" width="15"></a>
+        </div>
+        <div class="main-menu-items-holder">
+          <a class="pokemon-button w-inline-block" data-ix="pokemon-button-start" href="#" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="menu-button-inside-ring"><img src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579ba3b626366cb0486d360f_pinata.svg" width="21"></div>
+            <div class="blue-font modify">Pokémon</div>
+          </a>
+          <a class="shop-button w-inline-block" data-ix="shop-button-startup" href="#" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="menu-button-inside-ring"><img src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579ba6cbcdf56d0d425be3f1_paper-bag.svg" width="21"></div>
+            <div class="blue-font modify">shop</div>
+          </a>
+          <a class="pokedex-button w-inline-block" data-ix="pokedex-button-startup" href="#" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="menu-button-inside-ring"><img class="flip-image" src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579ba91118b5da9f79a167c4_temperature.svg" width="21"></div>
+            <div class="blue-font modify">Pokédex</div>
+          </a>
+          <a class="items-button w-inline-block" data-ix="items-button-startup" href="#" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="menu-button-inside-ring"><img src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579ba49556ea2dba79c3e040_backpack.svg" width="21"></div>
+            <div class="blue-font modify">items</div>
+          </a>
+          <a class="close-button w-inline-block" data-ix="close-main-menu" href="#" style="opacity: 1; transform: scaleX(1) scaleY(1) scaleZ(1); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div class="menu-button-inside-ring"><img src="http://uploads.webflow.com/579b7e9818b5da9f79a0e815/579b9ff818b5da9f79a14a40_access-denied.svg" width="8"></div>
+          </a>
+        </div>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
     </div>
 
