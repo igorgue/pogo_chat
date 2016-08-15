@@ -11,7 +11,38 @@
     </div>
   </div>
 </div>
-<div class="chat" style="display: none;">
+
+<div class="chat_window chat" style="display: none;">
+  <div class="top_menu">
+    <div class="title">PoGoChat!</div>
+  </div>
+  <ul class="chat-box"></ul>
+  <div class="bottom_wrapper clearfix">
+    <div class="message_input_wrapper">
+      <input type="text" class="chat-thing" placeholder="Was up" autofocus>
+    </div>
+  </div>
+</div>
+
+<div class="message_template">
+  <li class="message">
+    <div class="avatar"></div>
+    <div class="text_wrapper">
+      <div class="text"></div>
+    </div>
+  </li>
+ 
+  <li class="message right appeared" data-time="${Date()}">
+    <div class="avatar" style="background: url("images/pokemons/pikachu.png");"></div>
+    <div class="text_wrapper">
+      <div class="text">Welcome to POGOChat, :)</div>
+    </div>
+  </li>
+  
+</div>
+
+
+<div class="chat-old" style="display: none;">
   <div class="headline">
     <div class="logo">
       pogochat

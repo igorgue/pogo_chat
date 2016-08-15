@@ -72,8 +72,8 @@ let uuid = null
 let nearbyUsersCount = 0
 let userCount = $(".count")
 let geoOptions = {
-  enableHighAccuracy: true, 
-  maximumAge: 30000, 
+  enableHighAccuracy: true,
+  maximumAge: 30000,
   timeout: 27000
 }
 
@@ -81,9 +81,9 @@ var reply = database.queryAll("reply");
 
 reply.forEach(function(item) {
   if (item['self'] == 'true') {
-    messagesContainer.append(`<div class="reply push-message"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+    messagesContainer.append(`<li class="reply push-message"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></li>`)
   } else {
-    messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></div>`)
+    messagesContainer.append(`<li class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></li>`)
   }
 })
 
@@ -113,10 +113,10 @@ channel.on("new_msg", payload => {
 
   if (is_yours) {
     var self = "true";
-    messagesContainer.append(`<div data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
+    messagesContainer.append(`<li data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></li>`)
   } else {
     var self = "false";
-    messagesContainer.append(`<div data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></div>`)
+    messagesContainer.append(`<li data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></li>`)
   }
 
   // Save the reply
