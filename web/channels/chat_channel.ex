@@ -109,4 +109,8 @@ defmodule PogoChat.ChatChannel do
       {:noreply, socket}
     end
   end
+
+  ## Transports
+  transport :websocket, Phoenix.Transports.WebSocket,
+    timeout: 45_000
 end
