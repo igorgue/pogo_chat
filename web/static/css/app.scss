@@ -12,6 +12,31 @@ body {
   font-family: "Calibri", "Roboto", sans-serif;
 }
 
+// LAY-OVER
+.lay-over {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 91%;
+  height: 100%;
+  background: #FFFFFF;
+  bottom: 0;
+  z-index: 1002;
+
+  .close-button {
+    background: #1b8695;
+
+    .menu-button-inside-ring {
+      border: 1px solid #FFFFFF;
+      background-color: transparent;
+    }
+  }
+}
+
+// -----------
+
 .chat_window {
   position: absolute;
   width: 100%;
@@ -306,6 +331,43 @@ ul {
   }
 }
 
+.close-button {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: block;
+  width: 37px;
+  height: 37px;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-left: auto;
+  padding: 3px;
+  border: 1px solid #b3e0a1;
+  border-radius: 2000%;
+  background-color: hsla(0, 0%, 100%, .6);
+
+  .menu-button-inside-ring {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid #2f8c96;
+    border-radius: 2000%;
+    background-color: #fff;
+  }
+}
+
 // POKEMON BALL
 .poke-button {
   position: absolute;
@@ -460,23 +522,6 @@ ul {
     width: 59px;
     height: 59px;
     margin-bottom: 20px;
-    padding: 3px;
-    border: 1px solid #b3e0a1;
-    border-radius: 2000%;
-    background-color: hsla(0, 0%, 100%, .6);
-  }
-
-  .close-button {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    display: block;
-    width: 37px;
-    height: 37px;
-    margin-right: auto;
-    margin-bottom: 20px;
-    margin-left: auto;
     padding: 3px;
     border: 1px solid #b3e0a1;
     border-radius: 2000%;

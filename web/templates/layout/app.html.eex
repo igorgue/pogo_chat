@@ -26,7 +26,7 @@
             <div class="menu-button-inside-ring"><img src="images/pinata.svg" width="21"></div>
             <div class="blue-font modify">Pokémon</div>
           </a> -->
-          <a class="shop-button w-inline-block" data-ix="shop-button-startup" href="#" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+          <a class="shop-button report-signting w-inline-block" style="opacity: 1; transform: translateX(0px) translateY(0px) translateZ(0px); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
             <div class="menu-button-inside-ring"><img src="images/pinata.svg" width="21"></div>
             <div class="blue-font modify">report signting</div>
           </a>
@@ -38,13 +38,20 @@
             <div class="menu-button-inside-ring"><img src="images/backpack.svg" width="21"></div>
             <div class="blue-font modify">gear</div>
           </a> -->
-          <a class="close-button w-inline-block" data-ix="close-main-menu" href="#" style="opacity: 1; transform: scaleX(1) scaleY(1) scaleZ(1); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+          <a class="close-button w-inline-block" style="opacity: 1; transform: scaleX(1) scaleY(1) scaleZ(1); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
             <div class="menu-button-inside-ring"><img src="images/access-denied.svg" width="8"></div>
           </a>
         </div>
       </div>
 
       <%= render @view_module, @view_template, assigns %>
+
+      <div class="lay-over">
+        <div class="content"></div>
+        <a class="close-button w-inline-block close-lay-over" style="opacity: 1; transform: scaleX(1) scaleY(1) scaleZ(1); transition: opacity 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+          <div class="menu-button-inside-ring"><img src="images/access-denied.svg" width="8"></div>
+        </a>
+      </div>
     </div>
 
     <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>

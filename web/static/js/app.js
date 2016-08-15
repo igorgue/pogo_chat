@@ -52,6 +52,18 @@ $(".teams div").click(function() {
 $(".close-button").click(function() {
   $('.main-menu').css("display", "none");
 });
+
 $(".poke-button").click(function() {
   $('.main-menu').css("display", "flex");
+});
+
+// Handle lay-over
+$(".report-signting").click(function() {
+  $('.lay-over .content').html(" ");
+  $('.lay-over').show();
+});
+
+$(".close-lay-over").click(function() {
+  $('.lay-over').hide();
+  $('.lay-over .content').html(" ");
 });

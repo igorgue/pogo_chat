@@ -16,7 +16,7 @@
   <div class="top_menu">
     <div class="title">PoGoChat!</div>
     <div class="">
-      <a class="poke-button w-inline-block" data-ix="show-main-menu" href="#">
+      <a class="poke-button w-inline-block">
         <div class="red-part"></div>
         <div class="pokeball-center"></div>
       </a>
