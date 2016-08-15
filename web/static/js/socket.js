@@ -4,15 +4,14 @@
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
 import {Socket} from "phoenix"
+import { DB } from "web/static/js/db";
+
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // Initialise. If the database doesn't exist, it is created
-var database = new localStorageDB("chat", localStorage);
-if(! database.tableExists("reply")) {
-  database.createTable("reply", ["username", "content", "self"]);
-  database.commit();
-}
+var database = DB.setup();
+
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -77,7 +76,8 @@ let geoOptions = {
   timeout: 27000
 }
 
-var reply = database.queryAll("reply");
+// GET THE MESSAGES FROM LOCAL DATABASE
+var reply = DB.query(database, "reply");
 
 reply.forEach(function(item) {
   if (item['self'] == 'true') {
@@ -120,8 +120,7 @@ channel.on("new_msg", payload => {
   }
 
   // Save the reply
-  database.insert("reply", {username: payload.username, content: payload.body, self: self});
-  database.commit();
+  DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
 
   messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
 })
