@@ -81,9 +81,9 @@ var reply = database.queryAll("reply");
 
 reply.forEach(function(item) {
   if (item['self'] == 'true') {
-    messagesContainer.append(`<li class="reply push-message"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></li>`)
+    messagesContainer.append(`<li class="message right appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
   } else {
-    messagesContainer.append(`<li class="reply"><div class="username"><img src="images/pokemons/${item['username']}.png" alt="" /><h1>${item['username']}</h1></div><div class="the-reply">${item['content']}</div></li>`)
+    messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
   }
 })
 
@@ -113,10 +113,10 @@ channel.on("new_msg", payload => {
 
   if (is_yours) {
     var self = "true";
-    messagesContainer.append(`<li data-time="${Date()}" class="reply  push-message"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></li>`)
+    messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
   } else {
     var self = "false";
-    messagesContainer.append(`<li data-time="${Date()}" class="reply"><div class="username"><img src="images/pokemons/${payload.username}.png" alt="" /><h1>${payload.username}</h1></div><div class="the-reply">${payload.body}</div></li>`)
+    messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
   }
 
   // Save the reply
@@ -132,7 +132,7 @@ channel.on("random_pokemon", payload => {
 })
 
 channel.on("wild_pokemon_appeared", payload => {
-  console.log(`a wild ${payload.wild_pokemon} appeared`)
+  messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
 })
 
 channel.on("uuid", payload => {
@@ -156,7 +156,7 @@ channel.join()
   })
 
   messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
-  messagesContainer.append(`<div class="reply"><div class="username"><img src="images/pokemons/pikachu.png" alt="" /><h1>pikachu</h1></div><div class="the-reply">Welcome to POGOChat, :)</div></div>`)
+  messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, :)</div></div></li>`)
 
 function geoError() {
   console.error("Sorry, no position available.");

@@ -42,7 +42,7 @@ $(".teams div").click(function() {
   $(".chat-thing").attr('data-team', team);
 
   // brand the chat view
-  $(".headline").addClass(team+"-background");
+  $(".top_menu").addClass(team+"-background");
 
   $('.select-team').hide();
   $('.chat').show();
