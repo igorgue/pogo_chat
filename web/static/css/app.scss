@@ -366,13 +366,12 @@ ul {
 
   .blue-font {
     display: inline-block;
-    font-family: Lato, sans-serif;
     color: #2f8c96;
-    font-size: 7px;
-    line-height: 1em;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 9px;
+    line-height: 11px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
+    padding-top: 8px;
   }
 
   .icon {
@@ -381,13 +380,33 @@ ul {
   }
 
   // BUTTONS
+  .menu-button-inside-ring {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid #2f8c96;
+    border-radius: 2000%;
+    background-color: #fff;
+  }
+
   .pokemon-button {
     position: absolute;
     left: 30px;
     right: auto;
     bottom: 30px;
-    width: 45px;
-    height: 45px;
+    width: 59px;
+    height: 59px;
     margin-bottom: 20px;
     padding: 3px;
     border: 1px solid #b3e0a1;
@@ -401,8 +420,8 @@ ul {
     right: 0px;
     bottom: 100px;
     display: block;
-    width: 45px;
-    height: 45px;
+    width: 59px;
+    height: 59px;
     margin-right: auto;
     margin-bottom: 20px;
     margin-left: auto;
@@ -418,8 +437,8 @@ ul {
     right: 0px;
     bottom: 190px;
     display: block;
-    width: 45px;
-    height: 45px;
+    width: 59px;
+    height: 59px;
     margin-right: auto;
     margin-bottom: 20px;
     margin-left: auto;
@@ -434,8 +453,8 @@ ul {
     left: auto;
     right: 30px;
     bottom: 30px;
-    width: 45px;
-    height: 45px;
+    width: 59px;
+    height: 59px;
     margin-bottom: 20px;
     padding: 3px;
     border: 1px solid #b3e0a1;
@@ -449,8 +468,8 @@ ul {
     right: 0px;
     bottom: 0px;
     display: block;
-    width: 33px;
-    height: 33px;
+    width: 37px;
+    height: 37px;
     margin-right: auto;
     margin-bottom: 20px;
     margin-left: auto;
