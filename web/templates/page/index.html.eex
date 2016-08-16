@@ -37,10 +37,7 @@
 
 <div class="chat-old" style="display: none;">
   <div class="headline">
-    <div class="logo">
-      pogochat
-    </div>
-
+    
     <div class="count">
       -
     </div>
@@ -50,7 +47,6 @@
   </div>
 
   <div class="chat-input">
-    <input type="text" class="chat-thing" placeholder="Was up" autofocus>
   </div>
 </div>
 

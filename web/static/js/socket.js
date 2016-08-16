@@ -111,22 +111,42 @@ geolocationService.getCurrentPosition(position => {
         uuid: uuid
       }
 
+      console.log('keypress:')
+      console.log(data)
+
       channel.push("new_msg", data)
 
       // To send pokemon
       channel.push("seen", {coords: coords, pokemon: "bulbasaur"})
 
-      chatInput.val("")
+      // chatInput.val("")
     }
   })
+
+  $(".send-reply").click(function() {
+    console.log('send-reply:')
+    console.log(data)
+    var data = {
+      body: chatInput.val(),
+      coords: coords,
+      username: chatName,
+      uuid: uuid
+    }
+
+    channel.push("new_msg", data)
+  });
 
   // When a new message is received
   channel.on("new_msg", payload => {
     let is_yours = payload.uuid === uuid
 
+    console.log('new msg:')
+    console.log(payload)
+
     console.log(`Distance from message ${payload.distance_from_message}`)
 
     if(is_yours) {
+      chatInput.val("")
       var self = "true";
       messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
     } else {
