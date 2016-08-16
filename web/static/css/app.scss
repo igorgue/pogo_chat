@@ -185,7 +185,7 @@ body {
   position: relative;
   width: 100%;
   background-color: #fff;
-  padding: 12px 16px;
+  padding: 12px 1px 3px 1px;
   position: absolute;
   bottom: 0;
 }
@@ -201,11 +201,22 @@ body {
   border: none;
   height: 100%;
   box-sizing: border-box;
-  width: calc(100% - 40px);
+  width: calc(100% - 67px);
   position: absolute;
   outline-width: 0;
   color: gray;
+  border-right: 1px solid #bcbdc0;
 }
+
+.bottom_wrapper .message_input_wrapper .send-reply {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 60px;
+  background: transparent;
+  border: none;
+}
+
 .bottom_wrapper .send_message {
   width: 140px;
   height: 50px;
