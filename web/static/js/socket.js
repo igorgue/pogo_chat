@@ -111,6 +111,9 @@ geolocationService.getCurrentPosition(position => {
         uuid: uuid
       }
 
+      console.log('keypress:')
+      console.log(data)
+
       channel.push("new_msg", data)
 
       // To send pokemon
@@ -123,6 +126,9 @@ geolocationService.getCurrentPosition(position => {
   // When a new message is received
   channel.on("new_msg", payload => {
     let is_yours = payload.uuid === uuid
+
+    console.log('new msg:')
+    console.log(payload)
 
     console.log(`Distance from message ${payload.distance_from_message}`)
 
