@@ -25,7 +25,10 @@
   <ul class="chat-box messages"></ul>
   <div class="bottom_wrapper clearfix">
     <div class="message_input_wrapper">
-      <input type="text" class="chat-thing message_input" placeholder="Was up" autofocus>
+      <form action="#" onsubmit="return false;">
+        <input type="text" class="chat-thing message_input" placeholder="Was up">
+        <input class="send-reply" type="button" value="SEND" />
+      </form>
     </div>
   </div>
 </div>
