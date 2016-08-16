@@ -112,6 +112,10 @@ geolocationService.getCurrentPosition(position => {
       }
 
       channel.push("new_msg", data)
+
+      // To send pokemon
+      channel.push("seen", {coords: coords, pokemon: "bulbasaur"})
+
       chatInput.val("")
     }
   })
@@ -134,6 +138,12 @@ geolocationService.getCurrentPosition(position => {
     DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
 
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+  })
+
+  // When we receive a new pokemon seen
+  channel.on("seen_report", payload => {
+    console.log("seen report: ")
+    console.log(payload)
   })
 
   // When we receive our username
@@ -163,7 +173,6 @@ geolocationService.getCurrentPosition(position => {
 
   channel.join()
     .receive("ok", resp => {
-      console.log("wtf?")
       console.log("Joined successfully", resp)
 
       messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
@@ -179,7 +188,7 @@ geolocationService.getCurrentPosition(position => {
   geolocationService.watchPosition(position => {
     coords = {lat: position.coords.latitude, long: position.coords.longitude}
 
-    channel.push("announce_location", {uuid: uuid, coords: {lat: coords.lat, long: coords.long}})
+    channel.push("announce_location", {"uuid": uuid, "coords": {"lat": coords.lat, "long": coords.long}})
   }, geoError, geoOptions)
 }, geoError, geoOptions)
 

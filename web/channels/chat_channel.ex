@@ -14,7 +14,7 @@ defmodule PogoChat.ChatChannel do
   end
 
   defp initialize_socket(socket, message) do
-    socket = assign(socket, :coords, message["coords"])
+    socket = assign(socket, :coords, %{"lat": message["coords"]["lat"], "long": message["coords"]["long"]})
     socket = assign(socket, :uuid, UUID.uuid1())
     socket = assign(socket, :pokemon, Enum.random(pokemon()))
     socket = assign(socket, :nearby_users_ids, [])
@@ -36,10 +36,10 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_info(:after_join, socket) do
-    push socket, "uuid", %{uuid: socket.assigns.uuid}
-    push socket, "random_pokemon", %{random_pokemon: socket.assigns.pokemon}
+    push socket, "uuid", %{"uuid": socket.assigns.uuid}
+    push socket, "random_pokemon", %{"random_pokemon": socket.assigns.pokemon}
 
-    broadcast! socket, "wild_pokemon_appeared", %{wild_pokemon: socket.assigns.pokemon}
+    broadcast! socket, "wild_pokemon_appeared", %{"wild_pokemon": socket.assigns.pokemon}
 
     {:noreply, socket}
   end
@@ -55,19 +55,16 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("announce_location", payload, socket) do
-    Logger.debug "handle_in:announce_location #{inspect payload}"
-
     socket = assign(socket, :coords, payload["coords"])
+    payload = Map.put payload, "uuid", socket.assigns.uuid
 
-    broadcast! socket, "announce_location", %{uuid: socket.assigns.uuid, coords: socket.assigns.coords}
+    broadcast! socket, "announce_location", payload
 
     {:noreply, socket}
   end
 
   def handle_in("seen", payload, socket) do
-    Logger.debug "seen #{inspect payload}"
-
-    broadcast! socket, "seen", %{seen_by_uuid: socket.assigns.uuid, seen_by_pokemon: socket.assigns.pokemon, coords: payload["coords"], pokemon: payload["pokemon"]}
+    broadcast! socket, "seen", %{"seen_by_uuid": socket.assigns.uuid, "seen_by_pokemon": socket.assigns.pokemon, "coords": payload["coords"], "pokemon": payload["pokemon"]}
 
     {:noreply, socket}
   end
@@ -76,8 +73,9 @@ defmodule PogoChat.ChatChannel do
 
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
+    Logger.debug "COORDS: #{inspect payload["coords"]}"
     distance = geocalc_distance(payload["coords"], socket.assigns.coords)
-    payload = put_in payload["distance_from_message"], distance
+    payload = Map.put payload, "distance_from_message", distance
 
     Logger.debug "Distance: #{distance}"
 
@@ -87,9 +85,9 @@ defmodule PogoChat.ChatChannel do
 
       socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
 
-      payload = put_in payload["distance_from_message"], distance
+      payload = Map.put payload, "distance_from_message", distance
 
-      push socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
+      push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
       push socket, "new_msg", payload
 
       socket
@@ -101,15 +99,18 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("announce_location", payload, socket) do
+    Logger.debug "announce_location:out"
     #Logger.debug "handle_out:announce_location PAYLOAD: #{inspect payload} SOCKET: #{inspect socket.assigns}"
 
     if Map.has_key?(socket.assigns, :coords) do
       # If the socket doens't have coords *yet* it wouldn't get the message
+      Logger.debug "Coords #{inspect payload["coords"]}"
+      Logger.debug "assigns #{inspect socket.assigns.coords}"
       distance = geocalc_distance(payload["coords"], socket.assigns.coords)
 
       # Send or not send the message
       socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
-        push socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
+        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
 
         assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
       else
@@ -123,15 +124,13 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("seen", payload, socket) do
-    socket = if Map.has_key?(socket.assigns, :coords) do
-      distance = geocalc_distance(payload["coords"], socket.assigns.coords)
+    distance = geocalc_distance(payload.coords, socket.assigns.coords)
 
-      # Send or not send the message
-      if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
-        push socket, "seen_report", payload
-      else
-        socket
-      end
+    # Send or not send the message
+    if distance <= @close_by_distance and payload.seen_by_uuid != socket.assigns.uuid do
+      push socket, "seen_report", payload
+    else
+      socket
     end
 
     {:noreply, socket}
