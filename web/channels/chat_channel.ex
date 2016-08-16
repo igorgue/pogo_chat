@@ -3,6 +3,8 @@ defmodule PogoChat.ChatChannel do
 
   use Phoenix.Channel
 
+  import Phoenix.HTML, only: [html_escape: 1]
+
   @close_by_distance 500
 
   defp pokemon() do
@@ -45,6 +47,11 @@ defmodule PogoChat.ChatChannel do
   def handle_in("new_msg", payload, socket) do
     Logger.debug "handle_in #{inspect payload}"
 
+    # Sanitize the data
+    {_, safe_body} = html_escape(payload["body"])
+
+    payload = put_in payload["body"], safe_body
+
     socket = assign(socket, :coords, payload["coords"])
 
     broadcast! socket, "new_msg", payload
@@ -54,7 +61,7 @@ defmodule PogoChat.ChatChannel do
 
   def handle_in("announce_location", payload, socket) do
     socket = assign(socket, :coords, payload["coords"])
-    payload = Map.put payload, "uuid", socket.assigns.uuid
+    payload = put_in payload["uuid"], socket.assigns.uuid
 
     broadcast! socket, "announce_location", payload
 
@@ -73,7 +80,7 @@ defmodule PogoChat.ChatChannel do
     # Calculate distance from message
     Logger.debug "COORDS: #{inspect payload["coords"]}"
     distance = geocalc_distance(payload["coords"], socket.assigns.coords)
-    payload = Map.put payload, "distance_from_message", distance
+    payload = put_in payload["distance_from_message"], distance
 
     Logger.debug "Distance: #{distance}"
 
@@ -83,7 +90,7 @@ defmodule PogoChat.ChatChannel do
 
       socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
 
-      payload = Map.put payload, "distance_from_message", distance
+      payload = put_in payload["distance_from_message"], distance
 
       push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
       push socket, "new_msg", payload
