@@ -102,7 +102,7 @@ function buildLayover(lay) {
           $('.show-pokemon img').attr("src", "images/pokemons-hi/"+value+".jpg")
 
           $('.show-pokemon').show()
-          $('.show-pokemon h2').focus()
+          $('.selectize-input input').blur()
         }
       });
       break;
