@@ -20,8 +20,6 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-$('select').select2();
-
 function teamResize() {
   $(".teams div").each(function( index, data ) {
     var class_name = $(this).attr("class");
@@ -60,12 +58,10 @@ $(".poke-button").click(function() {
 });
 
 // Handle lay-over
-$(".report-signting").click(function() {
-  // $('.lay-over .content').html(" ");
-  $('.lay-over').show();
-});
-
 $(".close-lay-over").click(function() {
   $('.lay-over').hide();
-  $('.lay-over .content').html(" ");
+
+  // clear everything
+  $('.lay-over .content .title').html(" ");
+  $('.lay-over .content .the-lay-content').html(" ");
 });
