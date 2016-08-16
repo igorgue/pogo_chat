@@ -100,6 +100,9 @@ function buildLayover(lay) {
         onItemAdd(value, $item) {
           $('.show-pokemon h2').html($item.text())
           $('.show-pokemon img').attr("src", "images/pokemons-hi/"+value+".jpg")
+
+          $('.show-pokemon').show()
+          $('.show-pokemon h2').focus()
         }
       });
       break;
