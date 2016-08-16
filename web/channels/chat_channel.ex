@@ -1,5 +1,3 @@
-require IEx
-
 defmodule PogoChat.ChatChannel do
   require Logger
 
