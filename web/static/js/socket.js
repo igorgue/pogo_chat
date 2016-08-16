@@ -58,135 +58,129 @@ var database = DB.setup();
 
 socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("pogochat", {})
-let chatInput = $(".chat-thing")
-let messagesContainer = $(".chat-box")
 let geolocationService = navigator.geolocation
-let coords = {lat: null, long: null}
-let chatName = null
-let latHardcoded = $("#lat-input")
-let longHardcoded = $("#long-input")
-let uuid = null
-let nearbyUsersCount = 0
-let userCount = $(".count")
+
+function geoError() {
+  // TODO We couldn't get the location, please try to do something
+  console.error("Sorry, no position available.");
+}
+
 let geoOptions = {
   enableHighAccuracy: true,
   maximumAge: 30000,
   timeout: 27000
 }
 
-// GET THE MESSAGES FROM LOCAL DATABASE
-var reply = DB.query(database, "reply");
-
-reply.forEach(function(item) {
-  if (item['self'] == 'true') {
-    messagesContainer.append(`<li class="message right appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
-  } else {
-    messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
-  }
-})
-
-chatInput.on("keypress", event => {
-  if(event.keyCode === 13) {
-    if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-      coords.lat = parseFloat(latHardcoded.val())
-      coords.long = parseFloat(longHardcoded.val())
-    }
-
-    var data = {
-      body: chatInput.val(),
-      coords: coords,
-      username: chatName,
-      uuid: uuid
-    }
-
-    channel.push("new_msg", data)
-    chatInput.val("")
-  }
-})
-
-channel.on("new_msg", payload => {
-  let is_yours = payload.uuid === uuid
-
-  console.log(`Distance from message ${payload.distance_from_message}`)
-
-  if (is_yours) {
-    var self = "true";
-    messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
-  } else {
-    var self = "false";
-    messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
-  }
-
-  // Save the reply
-  DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
-
-  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
-})
-
-channel.on("random_pokemon", payload => {
-  chatName = payload.random_pokemon
-  chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
-})
-
-channel.on("wild_pokemon_appeared", payload => {
-  messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
-})
-
-channel.on("uuid", payload => {
-  console.log(`Your uuid is ${payload.uuid}`)
-
-  uuid = payload.uuid
-  chatInput.attr('data-uuid', payload.uuid)
-})
-
-channel.on("nearby_users_count", payload => {
-  nearbyUsersCount = payload["nearby_users_count"]
-  userCount.html(nearbyUsersCount)
-})
-
-channel.join()
-  .receive("ok", resp => {
-    console.log("Joined successfully", resp)
-  })
-  .receive("error", resp => {
-    console.log("Unable to join", resp)
-  })
-
-  messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
-  messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, :)</div></div></li>`)
-
-function geoError() {
-  console.error("Sorry, no position available.");
-}
-
-geolocationService.watchPosition(position => {
-  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-    coords.lat = parseFloat(latHardcoded.val())
-    coords.long = parseFloat(longHardcoded.val())
-  } else {
-    coords.lat = position.coords.latitude
-    coords.long = position.coords.longitude
-  }
-
-  if(coords !== {lat: null, long: null}){
-    channel.push("announce_location", {uuid: uuid, coords: coords})
-  }
-}, geoError, geoOptions)
+let coords = {lat: null, long: null}
 
 geolocationService.getCurrentPosition(position => {
-  if(latHardcoded.val() !== '' || longHardcoded.val() !== '') {
-    coords.lat = parseFloat(latHardcoded.val())
-    coords.long = parseFloat(longHardcoded.val())
-  } else {
-    coords.lat = position.coords.latitude
-    coords.long = position.coords.longitude
+  // Set position
+  coords = {lat: position.coords.latitude, long: position.coords.longitude}
+
+  // Now that you are connected, and we got your location, you can join channels with a topic:
+  let channel = socket.channel("pogochat", {coords: coords})
+  let chatInput = $(".chat-thing")
+  let messagesContainer = $(".chat-box")
+  let chatName = null
+  let latHardcoded = $("#lat-input")
+  let longHardcoded = $("#long-input")
+  let uuid = null
+  let nearbyUsersCount = 0
+  let userCount = $(".count")
+
+  // Get the messages from local database
+  function getAllReplies() {
+    var reply = DB.query(database, "reply");
+
+    reply.forEach(function(item) {
+      if (item['self'] == 'true') {
+        messagesContainer.append(`<li class="message right appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+      } else {
+        messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+      }
+    })
   }
 
-  if(coords !== {lat: null, long: null}){
-    channel.push("announce_location", {uuid: uuid, coords: coords})
-  }
+  // Main input, when return is pressed
+  chatInput.on("keypress", event => {
+    if(event.keyCode === 13) {
+      var data = {
+        body: chatInput.val(),
+        coords: coords,
+        username: chatName,
+        uuid: uuid
+      }
+
+      channel.push("new_msg", data)
+      chatInput.val("")
+    }
+  })
+
+  // When a new message is received
+  channel.on("new_msg", payload => {
+    let is_yours = payload.uuid === uuid
+
+    console.log(`Distance from message ${payload.distance_from_message}`)
+
+    if(is_yours) {
+      var self = "true";
+      messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
+    } else {
+      var self = "false";
+      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
+    }
+
+    // Save the reply
+    DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
+
+    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+  })
+
+  // When we receive our username
+  channel.on("random_pokemon", payload => {
+    chatName = payload.random_pokemon
+    chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
+  })
+
+  // When a new user appears
+  channel.on("wild_pokemon_appeared", payload => {
+    messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
+  })
+
+  // When we get an user id
+  channel.on("uuid", payload => {
+    console.log(`Your uuid is ${payload.uuid}`)
+
+    uuid = payload.uuid
+    chatInput.attr('data-uuid', payload.uuid)
+  })
+
+  // When we need to update our counter
+  channel.on("nearby_users_count", payload => {
+    nearbyUsersCount = payload["nearby_users_count"]
+    userCount.html(nearbyUsersCount)
+  })
+
+  channel.join()
+    .receive("ok", resp => {
+      console.log("wtf?")
+      console.log("Joined successfully", resp)
+
+      messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
+      messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, :)</div></div></li>`)
+    })
+    .receive("error", resp => {
+      // TODO there's an error to handle here too
+      console.log("Unable to join", resp)
+    })
+
+  getAllReplies()
+
+  geolocationService.watchPosition(position => {
+    coords = {lat: position.coords.latitude, long: position.coords.longitude}
+
+    channel.push("announce_location", {uuid: uuid, coords: {lat: coords.lat, long: coords.long}})
+  }, geoError, geoOptions)
 }, geoError, geoOptions)
 
 export default socket

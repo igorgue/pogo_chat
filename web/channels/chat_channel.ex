@@ -1,3 +1,5 @@
+require IEx
+
 defmodule PogoChat.ChatChannel do
   require Logger
 
@@ -11,7 +13,8 @@ defmodule PogoChat.ChatChannel do
     ]
   end
 
-  defp initialize_socket(socket) do
+  defp initialize_socket(socket, message) do
+    socket = assign(socket, :coords, message["coords"])
     socket = assign(socket, :uuid, UUID.uuid1())
     socket = assign(socket, :pokemon, Enum.random(pokemon()))
     socket = assign(socket, :nearby_users_ids, [])
@@ -26,10 +29,10 @@ defmodule PogoChat.ChatChannel do
     )
   end
 
-  def join(_, _message, socket) do
+  def join(_, message, socket) do
     send(self, :after_join)
 
-    {:ok, initialize_socket(socket)}
+    {:ok, initialize_socket(socket, message)}
   end
 
   def handle_info(:after_join, socket) do
@@ -61,7 +64,15 @@ defmodule PogoChat.ChatChannel do
     {:noreply, socket}
   end
 
-  intercept ["new_msg", "announce_location"]
+  def handle_in("seen", payload, socket) do
+    Logger.debug "seen #{inspect payload}"
+
+    broadcast! socket, "seen", %{seen_by_uuid: socket.assigns.uuid, seen_by_pokemon: socket.assigns.pokemon, coords: payload["coords"], pokemon: payload["pokemon"]}
+
+    {:noreply, socket}
+  end
+
+  intercept ["new_msg", "announce_location", "seen"]
 
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
@@ -78,7 +89,7 @@ defmodule PogoChat.ChatChannel do
 
       payload = put_in payload["distance_from_message"], distance
 
-      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
+      push socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
       push socket, "new_msg", payload
 
       socket
@@ -90,19 +101,20 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("announce_location", payload, socket) do
-    Logger.debug "handle_out:announce_location"
+    #Logger.debug "handle_out:announce_location PAYLOAD: #{inspect payload} SOCKET: #{inspect socket.assigns}"
 
-    if Map.has_key?(socket, :coords) do
+    if Map.has_key?(socket.assigns, :coords) do
+      # If the socket doens't have coords *yet* it wouldn't get the message
       distance = geocalc_distance(payload["coords"], socket.assigns.coords)
 
       # Send or not send the message
       socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
+        push socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
+
         assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
       else
         socket
       end
-
-      broadcast! socket, "nearby_users_count", %{nearby_users_count: Enum.count(socket.assigns.nearby_users_ids)}
 
       {:noreply, socket}
     else
@@ -110,4 +122,18 @@ defmodule PogoChat.ChatChannel do
     end
   end
 
+  def handle_out("seen", payload, socket) do
+    socket = if Map.has_key?(socket.assigns, :coords) do
+      distance = geocalc_distance(payload["coords"], socket.assigns.coords)
+
+      # Send or not send the message
+      if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
+        push socket, "seen_report", payload
+      else
+        socket
+      end
+    end
+
+    {:noreply, socket}
+  end
 end
