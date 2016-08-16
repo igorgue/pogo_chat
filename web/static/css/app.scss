@@ -9,7 +9,7 @@
 
 body {
   background-color: #edeff2;
-  font-family: "Calibri", "Roboto", sans-serif;
+  color: #3c3c3b!important;
 }
 
 // LAY-OVER
@@ -522,6 +522,7 @@ ul {
     border: 1px solid #b3e0a1;
     border-radius: 2000%;
     background-color: hsla(0, 0%, 100%, .6);
+    cursor: pointer;
   }
 
   .pokedex-button {
@@ -578,5 +579,44 @@ ul {
     -ms-flex: 1;
     flex: 1;
     text-align: center;
+  }
+}
+
+// the-lay-content
+.the-lay-content {
+
+  .report-signting-data {
+    padding: 23px 0px 0px 0px;
+
+    p {
+
+    }
+
+    .show-pokemon {
+      text-align: center;
+
+      h2 {
+        margin: 10px 0px 0px 0px;
+      }
+
+      hr {
+        margin: 9px 0px 9px 0px;
+      }
+
+      img {
+        width: 47%;
+      }
+
+      .report-button {
+        border: 3px solid #71EDB6;
+        border-radius: 4px;
+        text-transform: uppercase;
+        width: 64%;
+        margin: 0 auto;
+        padding: 13px;
+        font-size: 16px;
+        margin-top: 19px;
+      }
+    }
   }
 }
