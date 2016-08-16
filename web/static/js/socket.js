@@ -123,6 +123,19 @@ geolocationService.getCurrentPosition(position => {
     }
   })
 
+  $(".send-reply").click(function() {
+    console.log('send-reply:')
+    console.log(data)
+    var data = {
+      body: chatInput.val(),
+      coords: coords,
+      username: chatName,
+      uuid: uuid
+    }
+
+    channel.push("new_msg", data)
+  });
+
   // When a new message is received
   channel.on("new_msg", payload => {
     let is_yours = payload.uuid === uuid
