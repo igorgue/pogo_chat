@@ -119,7 +119,7 @@ geolocationService.getCurrentPosition(position => {
       // To send pokemon
       channel.push("seen", {coords: coords, pokemon: "bulbasaur"})
 
-      chatInput.val("")
+      // chatInput.val("")
     }
   })
 
@@ -133,6 +133,7 @@ geolocationService.getCurrentPosition(position => {
     console.log(`Distance from message ${payload.distance_from_message}`)
 
     if(is_yours) {
+      chatInput.val("")
       var self = "true";
       messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
     } else {
