@@ -7,6 +7,7 @@ defmodule PogoChat.ChatChannel do
   alias PogoChat.Pokemon, as: Pokemon
 
   @close_by_distance 1000
+  @max_message_size 255
 
   defp initialize_socket(socket, message) do
     socket = assign(socket, :coords, message["coords"])
@@ -49,14 +50,16 @@ defmodule PogoChat.ChatChannel do
 
     socket = assign(socket, :coords, payload["coords"])
 
-    case payload["body"] do
-      body when body != "" ->
-        broadcast! socket, "new_msg", payload
-      body when length(body) <= 255 ->
-        broadcast! socket, "new_msg", payload
-    end
+    if String.length(payload["body"]) != 0 and String.length(payload["body"]) <= @max_message_size do
+      broadcast! socket, "new_msg", payload
 
-    {:noreply, socket}
+      {:noreply, socket}
+    else
+      payload = put_in payload["error"], "Error trying to send a message, that's too long or empty"
+      push socket, "pogochat_errors", payload
+
+      {:noreply, socket}
+    end
   end
 
   def handle_in("announce_location", payload, socket) do

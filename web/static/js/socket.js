@@ -279,6 +279,11 @@ geolocationService.getCurrentPosition(position => {
     userCount.html(nearbyUsersCount)
   })
 
+  // When we get errors from the server
+  channel.on("pogochat_errors", payload => {
+    console.error(`Error: ${payload.error}`)
+  })
+
   channel.join()
     .receive("ok", resp => {
       console.log("Joined successfully", resp)
