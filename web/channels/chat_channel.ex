@@ -5,7 +5,7 @@ defmodule PogoChat.ChatChannel do
 
   import Phoenix.HTML, only: [html_escape: 1]
 
-  @close_by_distance 500
+  @close_by_distance 1000
 
   defp pokemon() do
     [
