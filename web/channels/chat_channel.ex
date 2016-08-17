@@ -14,6 +14,8 @@ defmodule PogoChat.ChatChannel do
   end
 
   defp initialize_socket(socket, message) do
+    Logger.debug "initialize_socket #{inspect message}"
+
     socket = assign(socket, :coords, %{"lat": message["coords"]["lat"], "long": message["coords"]["long"]})
     socket = assign(socket, :uuid, UUID.uuid1())
     socket = assign(socket, :pokemon, Enum.random(pokemon()))
@@ -23,13 +25,16 @@ defmodule PogoChat.ChatChannel do
   end
 
   defp geocalc_distance(point_a, point_b) do
+    Logger.debug "geocalc_distance_point_a #{inspect point_a}"
+    Logger.debug "geocalc_distance_point_b #{inspect point_b}"
     Geocalc.distance_between(
-      [point_a["lat"], point_a["long"]],
+      [point_a["lat"] , point_a["long"]],
       [point_b["lat"], point_b["long"]]
     )
   end
 
   def join(_, message, socket) do
+    socket = assign(socket, :coords, message["coords"])
     send(self, :after_join)
 
     {:ok, initialize_socket(socket, message)}
@@ -45,7 +50,7 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("new_msg", payload, socket) do
-    Logger.debug "handle_in #{inspect payload}"
+    Logger.debug "handle_in_new_msg #{inspect payload['coords']}"
 
     # Sanitize the data
     {_, safe_body} = html_escape(payload["body"])
@@ -60,6 +65,8 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("announce_location", payload, socket) do
+    Logger.debug "handle_in_announce_location #{inspect payload}"
+    Logger.debug "handle_in_announce_location_socket #{inspect socket}"
     socket = assign(socket, :coords, payload["coords"])
     payload = put_in payload["uuid"], socket.assigns.uuid
 
@@ -69,6 +76,8 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("seen", payload, socket) do
+    Logger.debug "handle_in_seen: #{inspect payload}"
+    # Logger.debug "handle_in_seen_socket: #{inspect socket}"
     broadcast! socket, "seen", %{"seen_by_uuid": socket.assigns.uuid, "seen_by_pokemon": socket.assigns.pokemon, "coords": payload["coords"], "pokemon": payload["pokemon"]}
 
     {:noreply, socket}
@@ -79,6 +88,8 @@ defmodule PogoChat.ChatChannel do
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
     Logger.debug "COORDS: #{inspect payload["coords"]}"
+    # Logger.debug "handle_out_new_msg #{inspect payload}"
+    Logger.debug "handle_out_new_msg_socket #{inspect socket.assigns.coords}"
     distance = geocalc_distance(payload["coords"], socket.assigns.coords)
     payload = put_in payload["distance_from_message"], distance
 

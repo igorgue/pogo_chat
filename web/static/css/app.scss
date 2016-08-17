@@ -261,6 +261,41 @@ body {
 
 ul {
 
+  .pokemon-reported {
+    border: 1px solid #000;
+    overflow: hidden;
+    padding: 7px;
+
+    .map {
+      float: left;
+
+      img {
+        width: 59px;
+      }
+    }
+
+    .poke-info {
+      float: left;
+      margin: 9px 0px 0px 15px;
+      max-width: 77%;
+
+      .name {
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 15px;
+      }
+
+      .location {
+        font-size: 14px;
+        font-weight: 300;
+
+        a {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   .wild {
 
     h3 {

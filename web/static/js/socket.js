@@ -205,6 +205,7 @@ geolocationService.getCurrentPosition(position => {
         $('.selectize-input input').blur()
 
         $(".report-button").on( "click", function() {
+          console.log(coords)
           channel.push("seen", {coords: coords, pokemon: $(".report-button").data("reporting")})
           $('.main-menu').hide()
           $('.lay-over').hide()
@@ -243,8 +244,14 @@ geolocationService.getCurrentPosition(position => {
 
   // When we receive a new pokemon seen
   channel.on("seen_report", payload => {
-    console.log("seen report: ")
-    console.log(payload)
+    messagesContainer.append(`<a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><li class="pokemon-reported message left appeared">
+      <div class="map"><img src="images/map.png"></div>
+      <div class="poke-info">
+        <div class="name">A wild ${payload.pokemon} reported nearby.</div>
+        <div class="location"><a>Open In Google Maps</a></div>
+      </div>
+    </li>`)
+    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })
 
   // When we receive our username
