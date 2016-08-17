@@ -602,7 +602,7 @@ ul {
       margin-bottom: 15px;
       text-align: right;
       text-decoration: none;
-      cursor: default;
+      cursor: pointer;;
     }
   }
 
@@ -619,6 +619,44 @@ ul {
 
 // the-lay-content
 .the-lay-content {
+
+  .settings-holder {
+
+    .options {
+      margin: 0px;
+      padding: 0px;
+
+      li {
+        list-style-type: none;
+        overflow: hidden;
+        border-bottom: 1px solid #71EDB6;
+        padding-bottom: 18px;
+
+        .action-name {
+          float: left;
+          padding-top: 4px;
+
+          h2 {
+            font-size: 16px;
+          }
+        }
+
+        .clear-database-button {
+          float: right;
+          cursor: pointer;
+          border: 3px solid #71EDB6;
+          border-radius: 4px;
+          text-transform: uppercase;
+          width: 60px;
+          margin: 0 auto;
+          padding: 5px;
+          font-size: 12px;
+          margin-top: 19px;
+          text-align: center;
+        }
+      }
+    }
+  }
 
   .report-signting-data {
     padding: 23px 0px 0px 0px;

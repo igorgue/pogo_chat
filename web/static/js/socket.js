@@ -204,7 +204,7 @@ geolocationService.getCurrentPosition(position => {
         $('.selectize-input input').blur()
 
         $(".report-button").on( "click", function() {
-          console.log(coords)
+          // console.log(coords)
           channel.push("seen", {coords: coords, pokemon: $(".report-button").data("reporting")})
           $('.main-menu').hide()
           $('.lay-over').hide()
