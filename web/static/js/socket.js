@@ -243,13 +243,13 @@ geolocationService.getCurrentPosition(position => {
 
   // When we receive a new pokemon seen
   channel.on("seen_report", payload => {
-    messagesContainer.append(`<a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><li class="pokemon-reported message left appeared">
-      <div class="map"><img src="images/map.png"></div>
+    messagesContainer.append(`<li class="pokemon-reported message left appeared">
+      <a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><div class="map"><img src="images/map.png"></div>
       <div class="poke-info">
         <div class="name">A wild ${payload.pokemon} reported nearby.</div>
         <div class="location"><a>Open In Google Maps</a></div>
       </div>
-    </li></a>`)
+    </a></li>`)
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })
 
@@ -262,6 +262,7 @@ geolocationService.getCurrentPosition(position => {
   // When a new user appears
   channel.on("wild_pokemon_appeared", payload => {
     messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
+    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })
 
   // When we get an user id
