@@ -151,14 +151,13 @@ geolocationService.getCurrentPosition(position => {
       console.log(data)
 
       channel.push("new_msg", data)
+      chatInput.blur()
 
       // chatInput.val("")
     }
   })
 
-  // Report pokemon
-
-
+  // CLick to send reply
   $(".send-reply").click(function() {
     console.log('send-reply:')
     console.log(data)
