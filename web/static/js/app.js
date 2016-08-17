@@ -20,8 +20,6 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-$('select').select2();
-
 function teamResize() {
   $(".teams div").each(function( index, data ) {
     var class_name = $(this).attr("class");
@@ -60,12 +58,30 @@ $(".poke-button").click(function() {
 });
 
 // Handle lay-over
-$(".report-signting").click(function() {
-  // $('.lay-over .content').html(" ");
-  $('.lay-over').show();
-});
-
 $(".close-lay-over").click(function() {
   $('.lay-over').hide();
-  $('.lay-over .content').html(" ");
+
+  // clear everything
+  $('.lay-over .content .title').html(" ");
+  $('.lay-over .content .the-lay-content').html(" ");
+});
+
+// handle options
+$('.open-settings').click(function() {
+  $('.lay-over .content .title').html("settings");
+  $('.lay-over .content .the-lay-content').html("<div class='settings-holder'><ul class='options'><li><div class='action-name'><h2>Clear Local Database</h2></div><div class='clear-database-button'>Clear</div></li></ul></div>");
+
+  $('.lay-over').show();
+
+  $(".clear-database-button").on('click', function() {
+    var database = new localStorageDB("chat", localStorage)
+    database.drop("chat")
+    database.commit()
+    location.reload()
+
+    $('.main-menu').hide()
+    $('.lay-over').hide()
+    $('.lay-over .content .title').html(" ");
+    $('.lay-over .content .the-lay-content').html(" ");
+  });
 });
