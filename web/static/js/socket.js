@@ -249,7 +249,7 @@ geolocationService.getCurrentPosition(position => {
         <div class="name">A wild ${payload.pokemon} reported nearby.</div>
         <div class="location"><a>Open In Google Maps</a></div>
       </div>
-    </li>`)
+    </li></a>`)
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })
 
