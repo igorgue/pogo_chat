@@ -269,6 +269,7 @@ geolocationService.getCurrentPosition(position => {
 
   // When a new user appears
   channel.on("wild_pokemon_appeared", payload => {
+    console.log(payload)
     messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })

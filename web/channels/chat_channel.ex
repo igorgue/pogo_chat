@@ -37,7 +37,7 @@ defmodule PogoChat.ChatChannel do
     push socket, "uuid", %{"uuid": socket.assigns.uuid}
     push socket, "random_pokemon", %{"random_pokemon": socket.assigns.pokemon}
 
-    broadcast! socket, "wild_pokemon_appeared", %{"wild_pokemon": socket.assigns.pokemon}
+    broadcast! socket, "wild_pokemon_appeared", %{"wild_pokemon": socket.assigns.pokemon, "coords": socket.assigns.coords, "uuid": socket.assigns.uuid}
 
     {:noreply, socket}
   end
@@ -65,6 +65,7 @@ defmodule PogoChat.ChatChannel do
   def handle_in("announce_location", payload, socket) do
     socket = assign(socket, :coords, payload["coords"])
     payload = put_in payload["uuid"], socket.assigns.uuid
+    payload = put_in payload["pokemon"], socket.assigns.pokemon
 
     broadcast! socket, "announce_location", payload
 
@@ -77,7 +78,7 @@ defmodule PogoChat.ChatChannel do
     {:noreply, socket}
   end
 
-  intercept ["new_msg", "announce_location", "seen"]
+  intercept ["new_msg", "announce_location", "seen", "wild_pokemon_appeared"]
 
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
@@ -108,15 +109,41 @@ defmodule PogoChat.ChatChannel do
 
       # Send or not send the message
       socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
-        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
+        socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
 
-        assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
+        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
+        push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload["pokemon"], "new_uuid": payload["uuid"], "distance": distance}
+
+        socket
       else
         socket
       end
 
       {:noreply, socket}
     else
+      {:noreply, socket}
+    end
+  end
+
+  def handle_out("wild_pokemon_appeared", payload, socket) do
+    if payload.uuid == socket.assigns.uuid do
+      # We the same homie
+      push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": 0}
+
+      {:noreply, socket}
+    else
+      # We not the same homie
+      distance = geocalc_distance(payload.coords, socket.assigns.coords)
+
+      # Send or not send the message
+      socket = if distance <= @close_by_distance do
+        push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
+
+        socket
+      else
+        socket
+      end
+
       {:noreply, socket}
     end
   end
