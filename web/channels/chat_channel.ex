@@ -109,26 +109,21 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("announce_location", payload, socket) do
-    if Map.has_key? socket.assigns, :coords do
-      # If the socket doens't have coords *yet* it wouldn't get the message
-      distance = geocalc_distance payload["coords"], socket.assigns.coords
+    # If the socket doens't have coords *yet* it wouldn't get the message
+    distance = geocalc_distance payload["coords"], socket.assigns.coords
 
-      # Send or not send the message
-      socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
-        socket = assign socket, :nearby_users_ids, Enum.uniq socket.assigns.nearby_users_ids ++ [payload["uuid"]]
+    # Send or not send the message
+    socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
+      socket = assign socket, :nearby_users_ids, Enum.uniq socket.assigns.nearby_users_ids ++ [payload["uuid"]]
 
-        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count socket.assigns.nearby_users_ids}
-        push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload["pokemon"], "new_uuid": payload["uuid"], "distance": distance}
+      push socket, "nearby_users_count", %{"nearby_users_count": Enum.count socket.assigns.nearby_users_ids}
 
-        socket
-      else
-        socket
-      end
-
-      {:noreply, socket}
+      socket
     else
-      {:noreply, socket}
+      socket
     end
+
+    {:noreply, socket}
   end
 
   def handle_out("wild_pokemon_appeared", payload, socket) do
