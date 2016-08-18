@@ -85,3 +85,6 @@ $('.open-settings').click(function() {
     $('.lay-over .content .the-lay-content').html(" ");
   });
 });
+
+// Close keyboard
+$('.chat-box').on({ 'touchstart' : function(){ $('.message_input').blur() } });
