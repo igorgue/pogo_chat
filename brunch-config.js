@@ -20,10 +20,7 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css",
-      order: {
-        before: ["web/static/css/bootstrap.scss"]
-      }
+      joinTo: "css/app.css"
     },
     templates: {
       joinTo: "js/app.js"
