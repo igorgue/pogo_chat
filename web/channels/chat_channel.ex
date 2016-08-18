@@ -9,26 +9,23 @@ defmodule PogoChat.ChatChannel do
   @close_by_distance 1000
   @max_message_size 255
 
-  defp initialize_socket(socket, message) do
-    socket = assign(socket, :coords, message["coords"])
-    socket = assign(socket, :uuid, UUID.uuid1())
-    socket = assign(socket, :pokemon, Enum.random(Pokemon.all()))
-    socket = assign(socket, :nearby_users_ids, [])
+  defp initialize_socket(socket, payload) do
+    socket = assign socket, :coords, payload["coords"]
+    socket = assign socket, :uuid, UUID.uuid1
+    socket = assign socket, :pokemon, Enum.random Pokemon.all
+    socket = assign socket, :nearby_users_ids, []
 
     socket
   end
 
   defp geocalc_distance(point_a, point_b) do
-    Geocalc.distance_between(
-      [point_a["lat"] , point_a["long"]],
-      [point_b["lat"], point_b["long"]]
-    )
+    Geocalc.distance_between [point_a["lat"] , point_a["long"]], [point_b["lat"], point_b["long"]]
   end
 
-  def join(_, message, socket) do
-    socket = initialize_socket(socket, message)
+  def join(_, payload, socket) do
+    socket = initialize_socket socket, payload
 
-    send(self, :after_join)
+    send self, :after_join
 
     {:ok, socket}
   end
@@ -37,20 +34,24 @@ defmodule PogoChat.ChatChannel do
     push socket, "uuid", %{"uuid": socket.assigns.uuid}
     push socket, "random_pokemon", %{"random_pokemon": socket.assigns.pokemon}
 
-    broadcast! socket, "wild_pokemon_appeared", %{"wild_pokemon": socket.assigns.pokemon, "coords": socket.assigns.coords, "uuid": socket.assigns.uuid}
+    broadcast! socket, "wild_pokemon_appeared", %{
+      "wild_pokemon": socket.assigns.pokemon,
+      "coords": socket.assigns.coords,
+      "uuid": socket.assigns.uuid
+    }
 
     {:noreply, socket}
   end
 
   def handle_in("new_msg", payload, socket) do
     # Sanitize the data
-    {_, safe_body} = html_escape(payload["body"])
+    {_, safe_body} = html_escape payload["body"]
 
     payload = put_in payload["body"], safe_body
 
-    socket = assign(socket, :coords, payload["coords"])
+    socket = assign socket, :coords, payload["coords"]
 
-    if String.length(payload["body"]) != 0 and String.length(payload["body"]) <= @max_message_size do
+    if String.length payload["body"] != 0 and String.length payload["body"] <= @max_message_size do
       broadcast! socket, "new_msg", payload
 
       {:noreply, socket}
@@ -63,7 +64,7 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("announce_location", payload, socket) do
-    socket = assign(socket, :coords, payload["coords"])
+    socket = assign socket, :coords, payload["coords"]
     payload = put_in payload["uuid"], socket.assigns.uuid
     payload = put_in payload["pokemon"], socket.assigns.pokemon
 
@@ -73,7 +74,12 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_in("seen", payload, socket) do
-    broadcast! socket, "seen", %{"seen_by_uuid": socket.assigns.uuid, "seen_by_pokemon": socket.assigns.pokemon, "coords": payload["coords"], "pokemon": payload["pokemon"]}
+    broadcast! socket, "seen", %{
+      "seen_by_uuid": socket.assigns.uuid,
+      "seen_by_pokemon": socket.assigns.pokemon,
+      "coords": payload["coords"],
+      "pokemon": payload["pokemon"]
+    }
 
     {:noreply, socket}
   end
@@ -82,16 +88,16 @@ defmodule PogoChat.ChatChannel do
 
   def handle_out("new_msg", payload, socket) do
     # Calculate distance from message
-    distance = geocalc_distance(payload["coords"], socket.assigns.coords)
+    distance = geocalc_distance payload["coords"], socket.assigns.coords
     payload = put_in payload["distance_from_message"], distance
 
     # Send or not send the message
     socket = if distance <= @close_by_distance do
-      socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
+      socket = assign socket, :nearby_users_ids, Enum.uniq socket.assigns.nearby_users_ids ++ [payload["uuid"]]
 
       payload = put_in payload["distance_from_message"], distance
 
-      push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
+      push socket, "nearby_users_count", %{"nearby_users_count": Enum.count socket.assigns.nearby_users_ids}
       push socket, "new_msg", payload
 
       socket
@@ -103,15 +109,15 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("announce_location", payload, socket) do
-    if Map.has_key?(socket.assigns, :coords) do
+    if Map.has_key? socket.assigns, :coords do
       # If the socket doens't have coords *yet* it wouldn't get the message
-      distance = geocalc_distance(payload["coords"], socket.assigns.coords)
+      distance = geocalc_distance payload["coords"], socket.assigns.coords
 
       # Send or not send the message
       socket = if distance <= @close_by_distance and payload["uuid"] != socket.assigns.uuid do
-        socket = assign(socket, :nearby_users_ids, Enum.uniq(socket.assigns.nearby_users_ids ++ [payload["uuid"]]))
+        socket = assign socket, :nearby_users_ids, Enum.uniq socket.assigns.nearby_users_ids ++ [payload["uuid"]]
 
-        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count(socket.assigns.nearby_users_ids)}
+        push socket, "nearby_users_count", %{"nearby_users_count": Enum.count socket.assigns.nearby_users_ids}
         push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload["pokemon"], "new_uuid": payload["uuid"], "distance": distance}
 
         socket
@@ -133,7 +139,7 @@ defmodule PogoChat.ChatChannel do
       {:noreply, socket}
     else
       # We not the same homie
-      distance = geocalc_distance(payload.coords, socket.assigns.coords)
+      distance = geocalc_distance payload.coords, socket.assigns.coords
 
       # Send or not send the message
       socket = if distance <= @close_by_distance do
@@ -149,7 +155,7 @@ defmodule PogoChat.ChatChannel do
   end
 
   def handle_out("seen", payload, socket) do
-    distance = geocalc_distance(payload.coords, socket.assigns.coords)
+    distance = geocalc_distance payload.coords, socket.assigns.coords
 
     # Send or not send the message
     if distance <= @close_by_distance and payload.seen_by_uuid != socket.assigns.uuid do
