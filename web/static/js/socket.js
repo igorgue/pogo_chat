@@ -227,8 +227,13 @@ geolocationService.getCurrentPosition(position => {
       messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
     } else {
       var self = "false";
-      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
+      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
     }
+
+    $('.message .avatar').on('click', function() {
+      chatInput.val(`:${payload.username}: `)
+      chatInput.focus()
+    })
 
     // Save the reply
     DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
