@@ -140,7 +140,7 @@ defmodule PogoChat.ChatChannel do
         if payload.uuid in socket.assigns.nearby_users_ids do
           socket
         else
-          push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
+          push socket, "wild_pokemon_appeared_report", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
 
           socket
         end
