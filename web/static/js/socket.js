@@ -310,7 +310,7 @@ geolocationService.getCurrentPosition(position => {
   geolocationService.watchPosition(position => {
     coords = {lat: position.coords.latitude, long: position.coords.longitude}
 
-    channel.push("announce_location", {"uuid": uuid, "coords": {"lat": coords.lat, "long": coords.long}})
+    // channel.push("announce_location", {"uuid": uuid, "coords": {"lat": coords.lat, "long": coords.long}})
   }, geoError, geoOptions)
 }, geoError, geoOptions)
 
