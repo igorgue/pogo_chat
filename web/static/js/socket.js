@@ -227,7 +227,15 @@ geolocationService.getCurrentPosition(position => {
       messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
     } else {
       var self = "false";
-      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${payload.body}</div></div></li>`)
+
+      var theMessage = payload.body
+      var firstWord = theMessage.split(/\s+/).slice(0,1).join(" ")
+      if (firstWord.match("^:") && firstWord.match(":$")) {
+        var body = `<img src="images/pokemons/${firstWord.replace(':', '').slice(0,-1)}.png"> ${theMessage.replace(firstWord, '')}`
+      } else {
+        var body = payload.body
+      }
+      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${body}</div></div></li>`)
     }
 
     $('.message .avatar').on('click', function() {
