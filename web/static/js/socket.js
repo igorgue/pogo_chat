@@ -211,6 +211,11 @@ geolocationService.getCurrentPosition(position => {
 
         $(".report-button").on( "click", function() {
           // console.log(coords)
+          if(!announced) {
+            channel.push("wild_pokemon_appeared", {})
+
+            announced = true
+          }
           channel.push("seen", {coords: coords, pokemon: $(".report-button").data("reporting")})
           $('.main-menu').hide()
           $('.lay-over').hide()
