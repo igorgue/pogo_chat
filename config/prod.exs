@@ -14,7 +14,7 @@ use Mix.Config
 config :pogo_chat, PogoChat.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4001],
   url: [host: "pogoconnect.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  # force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: "UDLsp6UNFvKvedhpz/1unocgOsO3bmp3hqw4t0DgSW/7PcXF5ognJZXdT74PipQ6"
 
