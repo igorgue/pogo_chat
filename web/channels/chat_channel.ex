@@ -51,7 +51,7 @@ defmodule PogoChat.ChatChannel do
 
     socket = assign socket, :coords, payload["coords"]
 
-    if String.length payload["body"] != 0 and String.length payload["body"] <= @max_message_size do
+    if String.length(payload["body"]) != 0 and String.length(payload["body"]) <= @max_message_size do
       broadcast! socket, "new_msg", payload
 
       {:noreply, socket}
@@ -134,7 +134,6 @@ defmodule PogoChat.ChatChannel do
   def handle_out("wild_pokemon_appeared", payload, socket) do
     if payload.uuid == socket.assigns.uuid do
       # We the same homie
-      push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": 0}
 
       {:noreply, socket}
     else
