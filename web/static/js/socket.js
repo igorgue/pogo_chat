@@ -151,7 +151,7 @@ geolocationService.getCurrentPosition(position => {
       console.log(data)
 
       channel.push("new_msg", data)
-      chatInput.blur()
+      // chatInput.blur()
 
       // chatInput.val("")
     }
@@ -159,8 +159,6 @@ geolocationService.getCurrentPosition(position => {
 
   // CLick to send reply
   $(".send-reply").click(function() {
-    console.log('send-reply:')
-    console.log(data)
     var data = {
       body: chatInput.val(),
       coords: coords,
@@ -220,9 +218,6 @@ geolocationService.getCurrentPosition(position => {
   // When a new message is received
   channel.on("new_msg", payload => {
     let is_yours = payload.uuid === uuid
-
-    console.log('new msg:')
-    console.log(payload)
 
     console.log(`Distance from message ${payload.distance_from_message}`)
 
