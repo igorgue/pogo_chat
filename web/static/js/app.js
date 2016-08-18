@@ -88,3 +88,8 @@ $('.open-settings').click(function() {
 
 // Close keyboard
 $('.chat-box').on({ 'touchstart' : function(){ $('.message_input').blur() } });
+
+$('.message .avatar').on('click', function() {
+  $(".chat-thing").val(`:${$(this).data("username")}: `)
+  $(".chat-thing").focus()
+})

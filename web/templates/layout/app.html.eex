@@ -9,6 +9,7 @@
 
     <title>PogoChat!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/css/selectize.css">
   </head>
 

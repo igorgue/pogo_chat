@@ -131,10 +131,11 @@ geolocationService.getCurrentPosition(position => {
 
     reply.forEach(function(item) {
       if (item['self'] == 'true') {
-        messagesContainer.append(`<li class="message right appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+        var direction = "right"
       } else {
-        messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+        var direction = "left"
       }
+      messagesContainer.append(`<li class="message ${direction} appeared"><div class="avatar" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
   }
 
