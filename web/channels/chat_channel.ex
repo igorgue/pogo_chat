@@ -34,11 +34,7 @@ defmodule PogoChat.ChatChannel do
     push socket, "uuid", %{"uuid": socket.assigns.uuid}
     push socket, "random_pokemon", %{"random_pokemon": socket.assigns.pokemon}
 
-    broadcast! socket, "wild_pokemon_appeared", %{
-      "wild_pokemon": socket.assigns.pokemon,
-      "coords": socket.assigns.coords,
-      "uuid": socket.assigns.uuid
-    }
+    # XXX DO NOT SEND ANY MESSAGE HERE, IOS MOBILE IS AWEFUL
 
     {:noreply, socket}
   end
@@ -61,6 +57,16 @@ defmodule PogoChat.ChatChannel do
 
       {:noreply, socket}
     end
+  end
+
+  def handle_in("wild_pokemon_appeared", _, socket) do
+    broadcast! socket, "wild_pokemon_appeared", %{
+      "wild_pokemon": socket.assigns.pokemon,
+      "coords": socket.assigns.coords,
+      "uuid": socket.assigns.uuid
+    }
+
+    {:noreply, socket}
   end
 
   def handle_in("announce_location", payload, socket) do

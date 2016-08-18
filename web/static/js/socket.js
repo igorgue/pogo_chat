@@ -123,6 +123,7 @@ geolocationService.getCurrentPosition(position => {
   let uuid = null
   let nearbyUsersCount = 0
   let userCount = $(".count")
+  let announced = false
 
   // Get the messages from local database
   function getAllReplies() {
@@ -140,6 +141,12 @@ geolocationService.getCurrentPosition(position => {
   // Main input, when return is pressed
   chatInput.on("keypress", event => {
     if(event.keyCode === 13) {
+      if(!announced) {
+        channel.push("wild_pokemon_appeared", {})
+
+        announced = true
+      }
+
       var data = {
         body: chatInput.val(),
         coords: coords,
