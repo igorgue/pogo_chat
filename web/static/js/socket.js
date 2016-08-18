@@ -265,6 +265,7 @@ geolocationService.getCurrentPosition(position => {
   channel.on("random_pokemon", payload => {
     chatName = payload.random_pokemon
     chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
+    messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, ${chatName.charAt(0).toUpperCase() + chatName.slice(1)} :)</div></div></li>`)
   })
 
   // When a new user appears
@@ -298,7 +299,6 @@ geolocationService.getCurrentPosition(position => {
       console.log("Joined successfully", resp)
 
       messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
-      messagesContainer.append(`<li class="message left appeared"><div class="avatar" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, :)</div></div></li>`)
     })
     .receive("error", resp => {
       // TODO there's an error to handle here too
