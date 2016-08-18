@@ -142,9 +142,13 @@ defmodule PogoChat.ChatChannel do
 
       # Send or not send the message
       socket = if distance <= @close_by_distance do
-        push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
+        if payload.uuid in socket.assigns.nearby_users_ids do
+          socket
+        else
+          push socket, "wild_pokemon_appeared", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
 
-        socket
+          socket
+        end
       else
         socket
       end
