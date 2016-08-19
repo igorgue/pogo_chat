@@ -179,7 +179,7 @@ geolocationService.getCurrentPosition(position => {
       // chatInput.blur()
 
       // clear the inpout
-      chatInput.val("")
+      // chatInput.val("")
     }
   })
 
@@ -266,6 +266,7 @@ geolocationService.getCurrentPosition(position => {
     }
 
     if(is_yours) {
+      chatInput.val("")
       var self = "true";
       var direction = "right"
     } else {
