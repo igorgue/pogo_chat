@@ -57,21 +57,36 @@ var database = DB.setup();
 
 socket.connect()
 
+let geoOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 30000,
+  timeout: 27000
+}
+
 function buildLayover(lay) {
   var title = $('.lay-over .content .title')
   var content = $('.lay-over .content .the-lay-content')
   switch (lay) {
     case 'PERMISSION_DENIED':
       title.html('User denied Geolocation')
-      content.html('In order for PoGoChat to work, it needs your location, and it seems like you have yours turned off or you declined it from being access.')
+      content.html('<div class="user-denied-geo"><p>In order for PoGoConnect to work, it needs your location, and it seems like you have yours turned off or you declined it from being access.</p> <p>Make sure Location services are turned on and reload this page.</p></div>')
+      $('.close-lay-over').hide();
+      $('.select-team').show();
+      $('.chat').hide();
       break;
     case 'POSITION_UNAVAILABLE':
       title.html('Location Unavailable')
       content.html('Could not detect your current location.')
+      $('.close-lay-over').hide();
+      $('.select-team').show();
+      $('.chat').hide();
       break;
     case 'UNKNOWN_ERROR':
       title.html('Geolocation Error')
       content.html('Seems like we are having problems getting your location, try moving around and reload the app.')
+      $('.close-lay-over').hide();
+      $('.select-team').show();
+      $('.chat').hide();
       break;
   }
 
@@ -98,12 +113,6 @@ function geoError(error) {
   }
   // TODO We couldn't get the location, please try to do something
   console.error("Sorry, no position available.");
-}
-
-let geoOptions = {
-  enableHighAccuracy: true,
-  maximumAge: 30000,
-  timeout: 27000
 }
 
 let coords = {lat: null, long: null}

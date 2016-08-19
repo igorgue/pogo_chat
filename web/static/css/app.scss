@@ -44,6 +44,28 @@ a:visited {
       margin-top: 36px;
       padding-bottom: 8px;
     }
+
+    // user denied geo
+    .user-denied-geo {
+
+      p {
+        font-size: 19px;
+        margin-top: 41px;
+      }
+
+      .reload-geo-button {
+        cursor: pointer;
+        border: 3px solid #71EDB6;
+        border-radius: 4px;
+        text-transform: uppercase;
+        width: 145px;
+        margin: 0 auto;
+        padding: 21px;
+        font-size: 15px;
+        margin-top: 49px;
+        text-align: center;
+      }
+    }
   }
 
   .close-button {
