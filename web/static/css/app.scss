@@ -795,3 +795,65 @@ ul {
     }
   }
 }
+
+
+// MEDIA QUERIES
+// iPhone 2G-4S in portrait
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
+  .main {
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 41px;
+        }
+      }
+    }
+  }
+}
+
+// iPhone 5 & 5S in portrait
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) {
+  .main {
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 41px;
+        }
+      }
+    }
+  }
+}
+
+// iPhone 6 in portrait
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+  .main {
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 49px;
+        }
+      }
+    }
+  }
+}
+
+// iPhone 6 Plus in portrait
+@media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : portrait) {
+  .main {
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 49px;
+        }
+      }
+    }
+  }
+}
