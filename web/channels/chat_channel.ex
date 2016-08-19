@@ -14,6 +14,7 @@ defmodule PogoChat.ChatChannel do
     socket = assign socket, :uuid, UUID.uuid1
     socket = assign socket, :pokemon, Enum.random Pokemon.all
     socket = assign socket, :nearby_users_ids, []
+    socket = assign socket, :announced_ids, []
 
     socket
   end
@@ -143,10 +144,12 @@ defmodule PogoChat.ChatChannel do
 
       # Send or not send the message
       socket = if distance <= @close_by_distance do
-        if payload.uuid in socket.assigns.nearby_users_ids do
+        if payload.uuid in socket.assigns.announced_ids do
           socket
         else
           push socket, "wild_pokemon_appeared_report", %{"wild_pokemon": payload.wild_pokemon, "new_uuid": payload.uuid, "distance": distance}
+
+          socket = assign socket, :announced_ids, Enum.uniq socket.assigns.announced_ids ++ [payload.uuid]
 
           socket
         end

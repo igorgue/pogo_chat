@@ -6,7 +6,6 @@
 import {Socket} from "phoenix"
 import {DB} from "web/static/js/db";
 
-
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // Initialise. If the database doesn't exist, it is created
@@ -123,7 +122,6 @@ geolocationService.getCurrentPosition(position => {
   let uuid = null
   let nearbyUsersCount = 0
   let userCount = $(".count")
-  let announced = false
 
   // Get the messages from local database
   function getAllReplies() {
@@ -142,11 +140,7 @@ geolocationService.getCurrentPosition(position => {
   // Main input, when return is pressed
   chatInput.on("keypress", event => {
     if(event.keyCode === 13) {
-      if(!announced) {
-        channel.push("wild_pokemon_appeared", {})
-
-        announced = true
-      }
+      channel.push("wild_pokemon_appeared", {})
 
       var data = {
         body: chatInput.val(),
@@ -210,12 +204,6 @@ geolocationService.getCurrentPosition(position => {
         $('.selectize-input input').blur()
 
         $(".report-button").on( "click", function() {
-          // console.log(coords)
-          if(!announced) {
-            channel.push("wild_pokemon_appeared", {})
-
-            announced = true
-          }
           channel.push("seen", {coords: coords, pokemon: $(".report-button").data("reporting")})
           $('.main-menu').hide()
           $('.lay-over').hide()
@@ -264,16 +252,13 @@ geolocationService.getCurrentPosition(position => {
 
   // When we receive a new pokemon seen
   channel.on("seen_report", payload => {
-    messagesContainer.append(`
-    <li class="pokemon-reported message left appeared">
-      <a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank">
-        <div class="map"><img src="images/map.png"></div>
-        <div class="poke-info">
-          <div class="name">A wild ${payload.pokemon} reported nearby.</div>
-          <div class="location">Open In Google Maps</div>
-        </div>
-      </a>
-    </li>`)
+    messagesContainer.append(`<li class="pokemon-reported message left appeared">
+      <a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><div class="map"><img src="images/map.png"></div>
+      <div class="poke-info">
+        <div class="name">A wild ${payload.pokemon} reported nearby.</div>
+        <div class="location"><a>Open In Google Maps</a></div>
+      </div>
+    </a></li>`)
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
   })
 
