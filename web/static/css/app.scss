@@ -68,6 +68,17 @@ a:visited {
   transform: translateX(-50%) translateY(-50%);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+
+  .the-count {
+    position: absolute;
+    left: 22px;
+    top: 19px;
+    display: block;
+    overflow: hidden;
+    margin-right: auto;
+    margin-left: auto;
+    z-index: 6;
+  }
 }
 
 // TOP MENU
@@ -554,7 +565,7 @@ ul {
     position: absolute;
     left: 0px;
     right: 0px;
-    bottom: 190px;
+    bottom: 210px;
     display: block;
     width: 59px;
     height: 59px;

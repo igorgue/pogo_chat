@@ -121,7 +121,7 @@ geolocationService.getCurrentPosition(position => {
   let longHardcoded = $("#long-input")
   let uuid = null
   let nearbyUsersCount = 0
-  let userCount = $(".count")
+  let userCount = $(".the-count")
   let announced = false
 
   // Get the messages from local database
