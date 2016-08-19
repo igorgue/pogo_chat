@@ -48,16 +48,16 @@ defmodule PogoChat.ChatChannel do
 
     socket = assign socket, :coords, payload["coords"]
 
-    # if String.length(payload["body"]) != 0 and String.length(payload["body"]) <= @max_message_size do
-    if String.length(payload["body"]) != 0 do
+    Logger.debug "the_reply_body: #{inspect payload["body"]}"
+    if String.length(payload["body"]) != 0 and String.length(payload["body"]) <= @max_message_size do
       broadcast! socket, "new_msg", payload
 
       {:noreply, socket}
-    # else
-    #   payload = put_in payload["error"], "Error trying to send a message, that's too long or empty"
-    #   push socket, "pogochat_errors", payload
-    #
-    #   {:noreply, socket}
+    else
+      payload = put_in payload["error"], "Error trying to send a message, that's too long or empty"
+      push socket, "pogochat_errors", payload
+
+      {:noreply, socket}
     end
   end
 
