@@ -4,6 +4,11 @@ export var DB = {
     if(! database.tableExists("reply")) {
       database.createTable("reply", ["username", "content", "self"]);
       database.commit();
+    } else {
+      var user = database.queryAll("user", { query: {"id": '1'}, limit: 1 });
+
+      // brand the chat view
+      $(".top_menu").addClass(user[0].team+"-background");
     }
 
     if(database.tableExists("user")) {
@@ -12,7 +17,7 @@ export var DB = {
     } else {
       database.createTable("user", ["username", "uuid", "team"]);
 
-      database.insertOrUpdate("user", {id: '1'}, {username: "username", uuid: "uuid", team: "mystic"});
+      database.insertOrUpdate("user", {id: '1'}, {username: "username", uuid: "uuid"});
       database.commit();
     }
 

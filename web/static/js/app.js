@@ -20,6 +20,8 @@ import "phoenix_html"
 
 import socket from "./socket"
 
+var database = new localStorageDB("chat", localStorage)
+
 function teamResize() {
   $(".teams div").each(function( index, data ) {
     var class_name = $(this).attr("class");
@@ -39,7 +41,9 @@ $( window ).resize(function() {
 // Handle team selection
 $(".teams div").click(function() {
   var team = $(this).data("team");
-  $(".chat-thing").attr('data-team', team);
+
+  database.insertOrUpdate("user", {id: '1'}, {team: team});
+  database.commit();
 
   // brand the chat view
   $(".top_menu").addClass(team+"-background");
@@ -74,7 +78,6 @@ $('.open-settings').click(function() {
   $('.lay-over').show();
 
   $(".clear-database-button").on('click', function() {
-    var database = new localStorageDB("chat", localStorage)
     database.drop("chat")
     database.commit()
     location.reload()
@@ -88,8 +91,3 @@ $('.open-settings').click(function() {
 
 // Close keyboard
 $('.chat-box').on({ 'touchstart' : function(){ $('.message_input').blur() } });
-
-$('.message .avatar').on('click', function() {
-  $(".chat-thing").val(`:${$(this).data("username")}: `)
-  $(".chat-thing").focus()
-})
