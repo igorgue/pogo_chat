@@ -155,6 +155,10 @@ geolocationService.getCurrentPosition(position => {
     })
   }
 
+  function scrollDown() {
+    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+  }
+
   // Main input, when return is pressed
   chatInput.on("keypress", event => {
     if(event.keyCode === 13) {
@@ -229,6 +233,16 @@ geolocationService.getCurrentPosition(position => {
           $('.lay-over').hide()
           $('.lay-over .content .title').html(" ");
           $('.lay-over .content .the-lay-content').html(" ");
+
+          messagesContainer.append(`<li class="pokemon-reported message left appeared">
+            <a href="http://maps.google.com/maps?q=${coords.lat},${coords.long}" target="_blank"><div class="map"><img src="images/pokemons-hi/${value}.jpg"></div>
+            <div class="poke-info">
+              <div class="name">A wild ${value} reported nearby.</div>
+              <div class="location">Open In Google Maps</div>
+            </div>
+          </a></li>`)
+
+          scrollDown()
         });
       }
     });
@@ -239,12 +253,11 @@ geolocationService.getCurrentPosition(position => {
   // When a new message is received
   channel.on("new_msg", payload => {
     let is_yours = payload.uuid === uuid
+    var theMessage = payload.body
 
     console.log(`Distance from message ${payload.distance_from_message}`)
 
     // is this a pokemon reply
-    var theMessage = payload.body
-
     if (/:.*:/i.test(theMessage) && theMessage.includes('null') == false && theMessage.includes('undefined') == false) {
       var thePokemon = (theMessage.match(/:.*:/i)+"").replace(':', '').slice(0,-1) //grab the pokemon and remove :
       var body = `<img src="images/pokemons/${thePokemon}.png"> ${thePokemon}`
@@ -269,7 +282,7 @@ geolocationService.getCurrentPosition(position => {
     // Save the reply
     DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
 
-    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+    scrollDown()
   })
 
   // When we receive a new pokemon seen
@@ -281,7 +294,7 @@ geolocationService.getCurrentPosition(position => {
         <div class="location">Open In Google Maps</div>
       </div>
     </a></li>`)
-    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+    scrollDown()
   })
 
   // When we receive our username
@@ -298,10 +311,10 @@ geolocationService.getCurrentPosition(position => {
   channel.on("wild_pokemon_appeared_report", payload => {
     console.log(payload)
     messagesContainer.append(`<li class="wild"><h3>Wild <span class="pp">${payload.wild_pokemon}</span> appeared!</h3><hr></li>`)
-    messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+    scrollDown()
   })
 
-  // When we get an user id
+  // When we get an user uuid
   channel.on("uuid", payload => {
     console.log(`Your uuid is ${payload.uuid}`)
 
