@@ -137,8 +137,8 @@ geolocationService.getCurrentPosition(position => {
       }
       messagesContainer.append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
-
-    messagesContainer.append(`<li class="message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to PoGoConnect :)</div></div></li>`)
+    $('.this-is-pikachu').hide()
+    messagesContainer.append(`<li class="this-is-pickachu message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to PoGoConnect :)</div></div></li>`)
 
     $('.message .avatar').on('click', function() {
       $(".chat-thing").val(":"+$(this).data("username")+":")
