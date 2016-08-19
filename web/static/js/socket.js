@@ -245,7 +245,7 @@ geolocationService.getCurrentPosition(position => {
     // is this a pokemon reply
     var theMessage = payload.body
 
-    if (/:.*:/i.test(theMessage) && theMessage.includes('null') == false) {
+    if (/:.*:/i.test(theMessage) && theMessage.includes('null') == false && theMessage.includes('undefined') == false) {
       var thePokemon = (theMessage.match(/:.*:/i)+"").replace(':', '').slice(0,-1) //grab the pokemon and remove :
       var body = `<img src="images/pokemons/${thePokemon}.png"> ${thePokemon}`
     } else {
