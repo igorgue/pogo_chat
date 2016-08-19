@@ -14,7 +14,7 @@
 
 <div class="chat_window chat" style="display: none;">
   <div class="top_menu">
-    <div class="title">PoGoChat!</div>
+    <div class="title">PoGoConnect!</div>
     <div class="">
       <a class="poke-button w-inline-block">
         <div class="red-part"></div>

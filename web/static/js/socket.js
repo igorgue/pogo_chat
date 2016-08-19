@@ -125,7 +125,8 @@ geolocationService.getCurrentPosition(position => {
   let announced = false
 
   // Get the messages from local database
-  function getAllReplies() {
+  function welcomeSetup() {
+    var userTable = DB.userTable(database);
     var reply = DB.query(database, "reply");
 
     reply.forEach(function(item) {
@@ -136,6 +137,9 @@ geolocationService.getCurrentPosition(position => {
       }
       messagesContainer.append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
+
+    messagesContainer.append(`<li class="message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to PoGoConnect :)</div></div></li>`)
+
     $('.message .avatar').on('click', function() {
       $(".chat-thing").val(":"+$(this).data("username")+":")
       $(".chat-thing").focus()
@@ -275,7 +279,10 @@ geolocationService.getCurrentPosition(position => {
   channel.on("random_pokemon", payload => {
     chatName = payload.random_pokemon
     chatInput.attr("placeholder", `Hi ${chatName}`).attr('data-username', chatName)
-    messagesContainer.append(`<li class="message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to POGOChat, ${chatName.charAt(0).toUpperCase() + chatName.slice(1)} :)</div></div></li>`)
+
+    // save username to localdatabase
+    database.insertOrUpdate("user", {id: '1'}, {username: chatName});
+    database.commit();
   })
 
   // When a new user appears
@@ -291,6 +298,10 @@ geolocationService.getCurrentPosition(position => {
 
     uuid = payload.uuid
     chatInput.attr('data-uuid', payload.uuid)
+
+    // save uuid to localdatabase
+    database.insertOrUpdate("user", {id: '1'}, {uuid: uuid});
+    database.commit();
   })
 
   // When we need to update our counter
@@ -315,7 +326,7 @@ geolocationService.getCurrentPosition(position => {
       console.log("Unable to join", resp)
     })
 
-  getAllReplies()
+  welcomeSetup()
 
   geolocationService.watchPosition(position => {
     coords = {lat: position.coords.latitude, long: position.coords.longitude}

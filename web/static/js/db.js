@@ -21,15 +21,15 @@ export var DB = {
       database.commit();
     }
 
-
     return database
-    console.log("Database setup done");
   },
 
   query: function(database, table) {
     return database.queryAll(table)
   },
-
+  userTable: function(database) {
+    return database.queryAll("user", { query: {"id": '1'}, limit: 1 });
+  },
   insert: function(database, table, payload) {
     database.insert(table, payload);
     database.commit();
