@@ -1,15 +1,17 @@
 <div class="select-team">
-  <div class="teams">
-    <div class="instinct" data-team="instinct">
-      <img src="images/teams/instinct.png" alt="" />
-    </div>
-    <div class="mystic" data-team="mystic">
-      <img src="images/teams/mystic.png" alt="" />
-    </div>
-    <div class="valor" data-team="valor">
-      <img src="images/teams/valor.png" alt="" />
-    </div>
-  </div>
+  <div class="container">
+   <div class="row teams">
+     <div class="col-12 instinct" data-team="instinct">
+        <img src="images/teams/instinct.png" alt="Team Instinct" />
+     </div>
+     <div class="col-12 mystic" data-team="mystic">
+       <img src="images/teams/mystic.png" alt="Team Mystic" />
+     </div>
+     <div class="col-12 valor" data-team="valor">
+       <img src="images/teams/valor.png" alt="Team Valor" />
+     </div>
+   </div>
+ </div>
 </div>
 
 <div class="chat_window chat" style="display: none;">

@@ -22,22 +22,6 @@ import socket from "./socket"
 
 var database = new localStorageDB("chat", localStorage)
 
-function teamResize() {
-  $(".teams div").each(function( index, data ) {
-    var class_name = $(this).attr("class");
-    var holder = $('.'+class_name).height();
-    var img = $('.'+class_name+' img').height();
-    var hHeight = (holder - img) / 2;
-    $('.'+class_name+' img').css("padding-top", hHeight+"px");
-  });
-}
-
-teamResize();
-
-$( window ).resize(function() {
-  teamResize();
-});
-
 // Handle team selection
 $(".teams div").click(function() {
   var team = $(this).data("team");

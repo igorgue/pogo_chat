@@ -7,6 +7,13 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
 body {
   background-color: #edeff2;
   color: #3c3c3b!important;
@@ -360,53 +367,56 @@ ul {
 
 // MAIn
 .main {
+  height: 100%;
 
   // SELECT TEAM
   .select-team {
     display: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
     height: 100%;
-    padding: 0px;
-    box-sizing: border-box;
-    overflow: hidden;
-
-    .action-message {
-
-    }
 
     .teams {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      left: 0;
 
       div {
-        height: 34%;
         cursor: pointer;
-
-        img {
-          width: 45%;
-          text-align: center;
-          display: block;
-          margin: 0 auto;
-        }
       }
+    }
 
-      .instinct {
-        background: #feda00;
-      }
+    .container,
+    .row {
+      height: 100%;
+      width: 100%;
+      max-width: 100%;
+    }
 
-      .mystic {
-        background: #0095fb;
-      }
+    .instinct,
+    .mystic,
+    .valor {
+      margin: 0px!important;
+      width: 100%;
+      height: 33.33%;
+      overflow: hidden;
+    }
 
-      .valor {
-        background: #f10703;
-      }
+    .instinct img,
+    .mystic img,
+    .valor img {
+      margin: 0 auto;
+      display: block;
+      max-width: 100%;
+      height: 100%;
+      margin-top: 0px;
+    }
+
+    .instinct {
+      background: #feda00;
+    }
+
+    .mystic {
+      background: #0095fb;
+    }
+
+    .valor {
+      background: #f10703;
     }
   }
 }
