@@ -125,6 +125,8 @@ geolocationService.getCurrentPosition(position => {
   let userCount = $(".count")
   let announced = false
 
+  console.log(announced)
+
   // Get the messages from local database
   function getAllReplies() {
     var reply = DB.query(database, "reply");
