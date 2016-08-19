@@ -19,7 +19,8 @@ config :pogo_chat, PogoChat.Endpoint,
   secret_key_base: "UDLsp6UNFvKvedhpz/1unocgOsO3bmp3hqw4t0DgSW/7PcXF5ognJZXdT74PipQ6"
 
 # Do not print debug messages in production
-config :logger, level: :info
+# config :logger, level: :info
+config :logger, :console, format: "[$level] $message\n"
 
 # ## SSL Support
 #
