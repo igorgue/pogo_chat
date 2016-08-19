@@ -35,7 +35,7 @@ defmodule PogoChat.ChatChannel do
     push socket, "uuid", %{"uuid": socket.assigns.uuid}
     push socket, "random_pokemon", %{"random_pokemon": socket.assigns.pokemon}
 
-    # XXX DO NOT SEND ANY MESSAGE HERE, IOS MOBILE IS AWEFUL
+    #  XXX DO NOT SEND ANY MESSAGE HERE, IOS MOBILE IS AWEFUL
 
     {:noreply, socket}
   end

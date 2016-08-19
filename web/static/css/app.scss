@@ -13,6 +13,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+a:visited {
+  color: transparent;;
+}
+
 // LAY-OVER
 .lay-over {
   display: none;
@@ -199,6 +203,7 @@ body {
   padding: 0 9px;
 }
 .bottom_wrapper .message_input_wrapper .message_input {
+  font-size: 14px;
   border: none;
   height: 100%;
   box-sizing: border-box;
@@ -267,6 +272,11 @@ ul {
     overflow: hidden;
     padding: 7px;
 
+    a {
+      display: block;
+      overflow: hidden;
+    }
+
     .map {
       float: left;
 
@@ -289,10 +299,8 @@ ul {
       .location {
         font-size: 14px;
         font-weight: 300;
-
-        a {
-          text-decoration: underline;
-        }
+        text-decoration: underline;
+        color: #fd3c4b;
       }
     }
   }
