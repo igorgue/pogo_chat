@@ -1,7 +1,7 @@
 export var DB = {
   setup: function() {
     var database = new localStorageDB("chat", localStorage);
-    if(! database.tableExists("reply")) {
+    if(!database.tableExists("reply")) {
       database.createTable("reply", ["username", "content", "self"]);
       database.commit();
     } else {
@@ -11,14 +11,18 @@ export var DB = {
       $(".top_menu").addClass(user[0].team+"-background");
     }
 
-    if(database.tableExists("user")) {
-      $('.select-team').hide();
-      $('.chat').show();
-    } else {
+    if(!database.tableExists("user")) {
+      $('.select-team').show();
       database.createTable("user", ["username", "uuid", "team"]);
 
       database.insertOrUpdate("user", {id: '1'}, {username: "username", uuid: "uuid"});
       database.commit();
+    } else {
+      if (user[0].team == null) {
+        $('.select-team').show();
+      } else {
+        $('.chat').show();
+      }
     }
 
     return database
