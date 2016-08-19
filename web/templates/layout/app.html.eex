@@ -26,6 +26,10 @@
 
   <body>
     <div class="main">
+      <div class="start-loading">
+        <div id="loader"></div>
+      </div>
+
       <div class="main-menu" data-ix="main-menu-startup" style="opacity: 1; transition: opacity 400ms;">
         <div class="settings-and-tips-div">
           <a class="setting-and-tips-link w-inline-block open-settings">

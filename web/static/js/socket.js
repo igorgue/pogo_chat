@@ -342,6 +342,8 @@ geolocationService.getCurrentPosition(position => {
     .receive("ok", resp => {
       console.log("Joined successfully", resp)
 
+      $('.start-loading').hide();
+
       messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500)
     })
     .receive("error", resp => {

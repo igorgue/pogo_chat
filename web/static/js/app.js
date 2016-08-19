@@ -19,18 +19,21 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+import {DB} from "web/static/js/db";
 
 var database = new localStorageDB("chat", localStorage)
 
 // Handle team selection
 $(".teams div").click(function() {
-  var team = $(this).data("team");
+  var selectedTeam = $(this).data("team");
 
-  database.insertOrUpdate("user", {id: '1'}, {team: team});
+  console.log(selectedTeam);
+
+  database.insertOrUpdate("user", {id: '1'}, {team: selectedTeam});
   database.commit();
 
   // brand the chat view
-  $(".top_menu").addClass(team+"-background");
+  $(".top_menu").addClass(selectedTeam+"-background");
 
   $('.select-team').hide();
   $('.chat').show();
