@@ -836,7 +836,21 @@ ul {
         img {
           height: auto;
           width: 93%;
-          margin-top: 49px;
+          margin-top: 33px;
+        }
+      }
+    }
+
+    .the-lay-content {
+      .report-signting-data {
+        padding: 0px 0 0;
+        p {
+          font-size: 1rem;
+        }
+        .show-pokemon {
+          h2 {
+            font-size: 1.4rem
+          }
         }
       }
     }
@@ -852,6 +866,20 @@ ul {
           height: auto;
           width: 93%;
           margin-top: 49px;
+        }
+      }
+    }
+
+    .the-lay-content {
+      .report-signting-data {
+        padding: 0px 0 0;
+        p {
+          font-size: 1rem;
+        }
+        .show-pokemon {
+          h2 {
+            font-size: 1.4rem
+          }
         }
       }
     }
