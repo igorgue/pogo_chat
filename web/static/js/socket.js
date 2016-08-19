@@ -266,10 +266,10 @@ geolocationService.getCurrentPosition(position => {
   // When we receive a new pokemon seen
   channel.on("seen_report", payload => {
     messagesContainer.append(`<li class="pokemon-reported message left appeared">
-      <a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><div class="map"><img src="images/map.png"></div>
+      <a href="http://maps.google.com/maps?q=${payload.coords.lat},${payload.coords.long}" target="_blank"><div class="map"><img src="images/pokemons-hi/${payload.pokemon}.jpg"></div>
       <div class="poke-info">
         <div class="name">A wild ${payload.pokemon} reported nearby.</div>
-        <div class="location"><a>Open In Google Maps</a></div>
+        <div class="location">Open In Google Maps</div>
       </div>
     </a></li>`)
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);

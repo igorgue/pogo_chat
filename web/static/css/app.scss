@@ -14,7 +14,7 @@ body {
 }
 
 a:visited {
-  color: transparent;;
+  color: #3c3c3b;
 }
 
 // LAY-OVER
@@ -67,7 +67,6 @@ a:visited {
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  background-color: #f8f8f8;
   overflow: hidden;
 }
 
