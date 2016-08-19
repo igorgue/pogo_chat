@@ -171,13 +171,11 @@ geolocationService.getCurrentPosition(position => {
         uuid: uuid
       }
 
-      // console.log('keypress:')
-      // console.log(data)
-
       channel.push("new_msg", data)
       // chatInput.blur()
 
-      // chatInput.val("")
+      // clear the inpout
+      chatInput.val("")
     }
   })
 
@@ -244,22 +242,24 @@ geolocationService.getCurrentPosition(position => {
 
     console.log(`Distance from message ${payload.distance_from_message}`)
 
+    // is this a pokemon reply
     var theMessage = payload.body
-    var firstWord = theMessage.split(/\s+/).slice(0,1).join(" ")
-    if (firstWord.match("^:") && firstWord.match(":$")) {
-      var body = `<img src="images/pokemons/${firstWord.replace(':', '').slice(0,-1)}.png"> ${theMessage.replace(firstWord, '')}`
+
+    if (/:.*:/i.test(theMessage) && theMessage.includes('null') == false) {
+      var thePokemon = (theMessage.match(/:.*:/i)+"").replace(':', '').slice(0,-1) //grab the pokemon and remove :
+      var body = `<img src="images/pokemons/${thePokemon}.png"> ${thePokemon}`
     } else {
       var body = payload.body
     }
 
     if(is_yours) {
-      chatInput.val("")
       var self = "true";
-      messagesContainer.append(`<li class="message right appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${body}</div></div></li>`)
+      var direction = "right"
     } else {
       var self = "false";
-      messagesContainer.append(`<li class="message left appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${body}</div></div></li>`)
+      var direction = "left"
     }
+    messagesContainer.append(`<li class="message ${direction} appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${body}</div></div></li>`)
 
     $('.message .avatar').on('click', function() {
       chatInput.val(`:${$(this).data("username")}: `)
