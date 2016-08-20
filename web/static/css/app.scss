@@ -803,7 +803,7 @@ ul {
   .main {
     .chat {
       .messages {
-        height: 73%;
+        height: 67%;
       }
     }
 
@@ -824,7 +824,7 @@ ul {
         img {
           height: auto;
           width: 93%;
-          margin-top: 25px;
+          margin-top: 09px
         }
       }
     }
@@ -832,24 +832,30 @@ ul {
     .lay-over {
       .content {
         .title {
-          font-size: 16px;
-          margin-top: 20px;
+          font-size: 15px;
+          margin-top: 9px;
         }
         .the-lay-content {
           .report-signting-data {
             padding: 0px 0 0;
             p {
               font-size: 0.9rem;
+              margin: 0px 0px 4px 0px;
             }
             .show-pokemon {
+              hr {
+                display: none;
+              }
               h2 {
-                font-size: 1rem;
+                font-size: 0.9rem;
               }
               img {
-                width: 44%;
+                width: 37%;
               }
               .report-button {
-                font-size: 13px;
+                font-size: 12px;
+                margin: 1px auto 0;
+                padding: 10px;
               }
             }
           }
@@ -941,7 +947,7 @@ ul {
         }
         .show-pokemon {
           h2 {
-            font-size: 1.4rem
+            font-size: 1.4rem;
           }
         }
       }
@@ -970,7 +976,7 @@ ul {
         }
         .show-pokemon {
           h2 {
-            font-size: 1.4rem
+            font-size: 1.4rem;
           }
         }
       }
