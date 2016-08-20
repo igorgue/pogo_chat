@@ -157,18 +157,6 @@ a:visited {
   margin: 0;
   height: 79%;
   overflow: scroll;
-  // iPhone 2G-4S in portrait
-  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
-    height: 67%;
-  }
-  // iPhone 5 & 5S in portrait
-  @media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) {
-    height: 73%;
-  }
-  // iPhone 6 in portrait
-  @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
-    height: 78%;
-  }
 }
 .messages .message {
   clear: both;
@@ -803,6 +791,276 @@ ul {
         padding: 13px;
         font-size: 16px;
         margin-top: 19px;
+      }
+    }
+  }
+}
+
+
+// MEDIA QUERIES
+// iPhone 6 Plus in portrait
+@media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : portrait) {
+  .main {
+    .chat {
+      .messages {
+        height: 79%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 77%;
+          margin: 9px 0px 0px 15px;
+          .name {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 33px;
+        }
+      }
+    }
+
+    .lay-over {
+      .content {
+        .title {
+          font-size: 17px;
+          margin-top: 36px;
+        }
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 1rem;
+              margin: 1em 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: block;
+              }
+              h2 {
+                font-size: 1.4rem;
+              }
+              img {
+                width: 47%;
+              }
+              .report-button {
+                font-size: 16px;
+                margin: 0 auto;
+                padding: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// iPhone 6 in portrait
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+  .main {
+    .chat {
+      .messages {
+        height: 78%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 77%;
+          margin: 9px 0px 0px 15px;
+          .name {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 33px;
+        }
+      }
+    }
+
+    .lay-over {
+      .content {
+        .title {
+          font-size: 17px;
+          margin-top: 36px;
+        }
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 1rem;
+              margin: 1em 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: block;
+              }
+              h2 {
+                font-size: 1.4rem;
+              }
+              img {
+                width: 47%;
+              }
+              .report-button {
+                font-size: 16px;
+                margin: 0 auto;
+                padding: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// iPhone 5 & 5S in portrait
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) {
+  .main {
+    .chat {
+      .messages {
+        height: 73%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 72%;
+          margin: 0px 0 0 15px;
+          .name {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 25px;
+        }
+      }
+    }
+
+    .lay-over {
+      .content {
+        .title {
+          font-size: 16px;
+          margin-top: 20px;
+        }
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 0.9rem;
+              margin: 1em 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: block;
+              }
+              h2 {
+                font-size: 1rem;
+              }
+              img {
+                width: 44%;
+              }
+              .report-button {
+                font-size: 13px;
+                margin: 0 auto;
+                padding: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// iPhone 2G-4S in portrait
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
+  .main {
+    .chat {
+      .messages {
+        height: 67%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 72%;
+          margin: 0px 0 0 15px;
+          .name {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .select-team {
+      .teams {
+        img {
+          height: auto;
+          width: 93%;
+          margin-top: 09px
+        }
+      }
+    }
+
+    .lay-over {
+      .content {
+        .title {
+          font-size: 15px;
+          margin-top: 9px;
+        }
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 0.9rem;
+              margin: 0px 0px 4px 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: none;
+              }
+              h2 {
+                font-size: 0.9rem;
+              }
+              img {
+                width: 37%;
+              }
+              .report-button {
+                font-size: 12px;
+                margin: 1px auto 0;
+                padding: 10px;
+              }
+            }
+          }
+        }
       }
     }
   }
