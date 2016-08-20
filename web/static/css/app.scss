@@ -51,9 +51,20 @@ a:visited {
       margin-top: 36px;
       padding-bottom: 8px;
 
+      // iphone 4
+      @media screen and (device-aspect-ratio: 2/3) {
+        font-size: 15px;
+        margin-top: 9px;
+      }
+      // iphone 5
       @media screen and (device-aspect-ratio: 40/71) {
         font-size: 16px;
         margin-top: 20px;
+      }
+      // iphone 6
+      @media screen and (device-aspect-ratio: 375/667) {
+        font-size: 17px;
+        margin-top: 36px;
       }
     }
 
@@ -163,9 +174,19 @@ a:visited {
   height: 79%;
   overflow: scroll;
 
+  // iphone 4
+  @media screen and (device-aspect-ratio: 2/3) {
+    height: 67%;
+  }
+  // iphone 5
   @media screen and (device-aspect-ratio: 40/71) {
     height: 73%;
   }
+  // iphone 6
+  @media screen and (device-aspect-ratio: 375/667) {
+    height: 79%;
+  }
+  // iphone 6 plus
 }
 .messages .message {
   clear: both;
@@ -339,14 +360,20 @@ ul {
       margin: 9px 0px 0px 15px;
       max-width: 77%;
 
+      // iphone 4
       @media screen and (device-aspect-ratio: 2/3) {
         max-width: 72%;
         margin: 0px 0 0 15px;
       }
-
+      // iphone 5
       @media screen and (device-aspect-ratio: 40/71) {
         max-width: 72%;
         margin: 0px 0 0 15px;
+      }
+      // iphone 6
+      @media screen and (device-aspect-ratio: 375/667) {
+        max-width: 77%;
+        margin: 9px 0px 0px 15px;
       }
 
       .name {
@@ -354,12 +381,17 @@ ul {
         text-transform: capitalize;
         font-size: 15px;
 
+        // iphone 4
         @media screen and (device-aspect-ratio: 2/3) {
           font-size: 14px;
         }
-
+        // iphone 5
         @media screen and (device-aspect-ratio: 40/71) {
           font-size: 14px;
+        }
+        // iphone 6
+        @media screen and (device-aspect-ratio: 375/667) {
+          font-size: 15px;
         }
       }
 
@@ -481,16 +513,23 @@ ul {
       height: 100%;
       margin-top: 0px;
 
+      // iphone 4
       @media screen and (device-aspect-ratio: 2/3) {
         height: auto;
         width: 93%;
         margin-top: 09px;
       }
-
+      // iphone 5
       @media screen and (device-aspect-ratio: 40/71) {
         height: auto;
         width: 93%;
         margin-top: 25px;
+      }
+      // iphone 6
+      @media screen and (device-aspect-ratio: 375/667) {
+        height: auto;
+        width: 93%;
+        margin-top: 33px;
       }
     }
 
@@ -799,14 +838,33 @@ ul {
 
   .report-signting-data {
     padding: 23px 0px 0px 0px;
+    // iphone 4
+    @media screen and (device-aspect-ratio: 2/3)  {
+      padding: 0px 0 0;
+    }
+    // iphone 5
     @media screen and (device-aspect-ratio: 40/71) {
+      padding: 0px 0 0;
+    }
+    // iphone 6
+    @media screen and (device-aspect-ratio: 375/667) {
       padding: 0px 0 0;
     }
 
     p {
-
+      // iphone 4
+      @media screen and (device-aspect-ratio: 2/3) {
+        font-size: 0.9rem;
+        margin: 0px 0px 4px 0px;
+      }
+      // iphone 5
       @media screen and (device-aspect-ratio: 40/71) {
         font-size: 0.9rem;
+        margin: 1em 0px;
+      }
+      // iphone 6
+      @media screen and (device-aspect-ratio: 375/667) {
+        font-size: 1rem;
         margin: 1em 0px;
       }
     }
@@ -817,22 +875,49 @@ ul {
 
       h2 {
         margin: 10px 0px 0px 0px;
+        // iphone 4
+        @media screen and (device-aspect-ratio: 2/3) {
+          font-size: 0.9rem;
+        }
+        // iphone 5
         @media screen and (device-aspect-ratio: 40/71) {
           font-size: 1rem;
+        }
+        // iphone 6
+        @media screen and (device-aspect-ratio: 375/667) {
+          font-size: 1.4rem;
         }
       }
 
       hr {
         margin: 9px 0px 9px 0px;
+        // iphone 4
+        @media screen and (device-aspect-ratio: 2/3) {
+          display: none;
+        }
+        // iphone 5
         @media screen and (device-aspect-ratio: 40/71) {
+          display: block;
+        }
+        // iphone 6
+        @media screen and (device-aspect-ratio: 375/667) {
           display: block;
         }
       }
 
       img {
         width: 47%;
+        // iphone 4
+        @media screen and (device-aspect-ratio: 2/3) {
+          width: 37%;
+        }
+        // iphone 5
         @media screen and (device-aspect-ratio: 40/71) {
           width: 44%;
+        }
+        // iphone 6
+        @media screen and (device-aspect-ratio: 375/667) {
+          width: 47%;
         }
       }
 
@@ -846,8 +931,22 @@ ul {
         padding: 13px;
         font-size: 16px;
         margin-top: 19px;
+
+        // iphone 4
+        @media screen and (device-aspect-ratio: 2/3) {
+          font-size: 12px;
+          margin: 1px auto 0;
+          padding: 10px;
+        }
+        // iphone 5
         @media screen and (device-aspect-ratio: 40/71) {
           font-size: 13px;
+          margin: 0 auto;
+          padding: 13px;
+        }
+        // iphone 6
+        @media screen and (device-aspect-ratio: 375/667) {
+          font-size: 16px;
           margin: 0 auto;
           padding: 13px;
         }
