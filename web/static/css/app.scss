@@ -66,6 +66,11 @@ a:visited {
         font-size: 17px;
         margin-top: 36px;
       }
+      // iphone 6 plus
+      @media screen and (device-aspect-ratio: 16/9) {
+        font-size: 17px;
+        margin-top: 36px;
+      }
     }
 
     // user denied geo
@@ -187,6 +192,9 @@ a:visited {
     height: 79%;
   }
   // iphone 6 plus
+  @media screen and (device-aspect-ratio: 16/9) {
+    height: 79%;
+  }
 }
 .messages .message {
   clear: both;
@@ -375,6 +383,11 @@ ul {
         max-width: 77%;
         margin: 9px 0px 0px 15px;
       }
+      // iphone 6 plus
+      @media screen and (device-aspect-ratio: 16/9) {
+        max-width: 77%;
+        margin: 9px 0px 0px 15px;
+      }
 
       .name {
         font-weight: bold;
@@ -391,6 +404,10 @@ ul {
         }
         // iphone 6
         @media screen and (device-aspect-ratio: 375/667) {
+          font-size: 15px;
+        }
+        // iphone 6 plus
+        @media screen and (device-aspect-ratio: 16/9) {
           font-size: 15px;
         }
       }
@@ -527,6 +544,12 @@ ul {
       }
       // iphone 6
       @media screen and (device-aspect-ratio: 375/667) {
+        height: auto;
+        width: 93%;
+        margin-top: 33px;
+      }
+      // iphone 6 plus
+      @media screen and (device-aspect-ratio: 16/9) {
         height: auto;
         width: 93%;
         margin-top: 33px;
@@ -850,6 +873,10 @@ ul {
     @media screen and (device-aspect-ratio: 375/667) {
       padding: 0px 0 0;
     }
+    // iphone 6 plus
+    @media screen and (device-aspect-ratio: 16/9) {
+      padding: 0px 0 0;
+    }
 
     p {
       // iphone 4
@@ -864,6 +891,11 @@ ul {
       }
       // iphone 6
       @media screen and (device-aspect-ratio: 375/667) {
+        font-size: 1rem;
+        margin: 1em 0px;
+      }
+      // iphone 6 plus
+      @media screen and (device-aspect-ratio: 16/9) {
         font-size: 1rem;
         margin: 1em 0px;
       }
@@ -887,6 +919,10 @@ ul {
         @media screen and (device-aspect-ratio: 375/667) {
           font-size: 1.4rem;
         }
+        // iphone 6 plus
+        @media screen and (device-aspect-ratio: 16/9) {
+          font-size: 1.4rem;
+        }
       }
 
       hr {
@@ -903,6 +939,10 @@ ul {
         @media screen and (device-aspect-ratio: 375/667) {
           display: block;
         }
+        // iphone 6 plus
+        @media screen and (device-aspect-ratio: 16/9) {
+          display: block;
+        }
       }
 
       img {
@@ -917,6 +957,10 @@ ul {
         }
         // iphone 6
         @media screen and (device-aspect-ratio: 375/667) {
+          width: 47%;
+        }
+        // iphone 6 plus
+        @media screen and (device-aspect-ratio: 16/9) {
           width: 47%;
         }
       }
@@ -946,6 +990,12 @@ ul {
         }
         // iphone 6
         @media screen and (device-aspect-ratio: 375/667) {
+          font-size: 16px;
+          margin: 0 auto;
+          padding: 13px;
+        }
+        // iphone 6 plus
+        @media screen and (device-aspect-ratio: 16/9) {
           font-size: 16px;
           margin: 0 auto;
           padding: 13px;
