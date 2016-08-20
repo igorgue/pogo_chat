@@ -801,12 +801,58 @@ ul {
 // iPhone 2G-4S in portrait
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
   .main {
+    .chat {
+      .messages {
+        height: 73%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 72%;
+          margin: 0px 0 0 15px;
+          .name {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
     .select-team {
       .teams {
         img {
           height: auto;
           width: 93%;
-          margin-top: 41px;
+          margin-top: 25px;
+        }
+      }
+    }
+
+    .lay-over {
+      .content {
+        .title {
+          font-size: 16px;
+          margin-top: 20px;
+        }
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 0.9rem;
+            }
+            .show-pokemon {
+              h2 {
+                font-size: 1rem;
+              }
+              img {
+                width: 44%;
+              }
+              .report-button {
+                font-size: 13px;
+              }
+            }
+          }
         }
       }
     }
@@ -816,25 +862,57 @@ ul {
 // iPhone 5 & 5S in portrait
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) {
   .main {
+    .chat {
+      .messages {
+        height: 73%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 72%;
+          margin: 0px 0 0 15px;
+          .name {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
     .select-team {
       .teams {
         img {
           height: auto;
           width: 93%;
-          margin-top: 33px;
+          margin-top: 25px;
         }
       }
     }
 
-    .the-lay-content {
-      .report-signting-data {
-        padding: 0px 0 0;
-        p {
-          font-size: 1rem;
+    .lay-over {
+      .content {
+        .title {
+          font-size: 16px;
+          margin-top: 20px;
         }
-        .show-pokemon {
-          h2 {
-            font-size: 1.4rem
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 0.9rem;
+            }
+            .show-pokemon {
+              h2 {
+                font-size: 1rem;
+              }
+              img {
+                width: 44%;
+              }
+              .report-button {
+                font-size: 13px;
+              }
+            }
           }
         }
       }
