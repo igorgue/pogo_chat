@@ -907,8 +907,12 @@ ul {
             padding: 0px 0 0;
             p {
               font-size: 0.9rem;
+              margin: 1em 0px;
             }
             .show-pokemon {
+              hr {
+                display: block;
+              }
               h2 {
                 font-size: 1rem;
               }
@@ -917,6 +921,8 @@ ul {
               }
               .report-button {
                 font-size: 13px;
+                margin: 0 auto;
+                padding: 13px;
               }
             }
           }
@@ -929,6 +935,24 @@ ul {
 // iPhone 6 in portrait
 @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
   .main {
+    .chat {
+      .messages {
+        height: 79%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 77%;
+          margin: 9px 0px 0px 15px;
+          .name {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
     .select-team {
       .teams {
         img {
@@ -939,15 +963,35 @@ ul {
       }
     }
 
-    .the-lay-content {
-      .report-signting-data {
-        padding: 0px 0 0;
-        p {
-          font-size: 1rem;
+    .lay-over {
+      .content {
+        .title {
+          font-size: 17px;
+          margin-top: 36px;
         }
-        .show-pokemon {
-          h2 {
-            font-size: 1.4rem;
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 1rem;
+              margin: 1em 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: block;
+              }
+              h2 {
+                font-size: 1.4rem;
+              }
+              img {
+                width: 47%;
+              }
+              .report-button {
+                font-size: 16px;
+                margin: 0 auto;
+                padding: 13px;
+              }
+            }
           }
         }
       }
@@ -958,25 +1002,63 @@ ul {
 // iPhone 6 Plus in portrait
 @media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : portrait) {
   .main {
+    .chat {
+      .messages {
+        height: 79%;
+      }
+    }
+
+    ul {
+      .pokemon-reported {
+        .poke-info {
+          max-width: 77%;
+          margin: 9px 0px 0px 15px;
+          .name {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
     .select-team {
       .teams {
         img {
           height: auto;
           width: 93%;
-          margin-top: 49px;
+          margin-top: 33px;
         }
       }
     }
 
-    .the-lay-content {
-      .report-signting-data {
-        padding: 0px 0 0;
-        p {
-          font-size: 1rem;
+    .lay-over {
+      .content {
+        .title {
+          font-size: 17px;
+          margin-top: 36px;
         }
-        .show-pokemon {
-          h2 {
-            font-size: 1.4rem;
+        .the-lay-content {
+          .report-signting-data {
+            padding: 0px 0 0;
+            p {
+              font-size: 1rem;
+              margin: 1em 0px;
+            }
+            .show-pokemon {
+              hr {
+                display: block;
+              }
+              h2 {
+                font-size: 1.4rem;
+              }
+              img {
+                width: 47%;
+              }
+              .report-button {
+                font-size: 16px;
+                margin: 0 auto;
+                padding: 13px;
+              }
+            }
           }
         }
       }
