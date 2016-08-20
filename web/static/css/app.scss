@@ -8,11 +8,7 @@
 }
 
 html,
-body,
-.arubinofaux,
-.igorgue,
-.techno,
-.acid {
+body {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -54,6 +50,11 @@ a:visited {
       border-bottom: 1px solid;
       margin-top: 36px;
       padding-bottom: 8px;
+
+      @media screen and (device-aspect-ratio: 40/71) {
+        font-size: 16px;
+        margin-top: 20px;
+      }
     }
 
     // user denied geo
@@ -161,6 +162,10 @@ a:visited {
   margin: 0;
   height: 79%;
   overflow: scroll;
+
+  @media screen and (device-aspect-ratio: 40/71) {
+    height: 73%;
+  }
 }
 .messages .message {
   clear: both;
@@ -334,10 +339,28 @@ ul {
       margin: 9px 0px 0px 15px;
       max-width: 77%;
 
+      @media screen and (device-aspect-ratio: 2/3) {
+        max-width: 72%;
+        margin: 0px 0 0 15px;
+      }
+
+      @media screen and (device-aspect-ratio: 40/71) {
+        max-width: 72%;
+        margin: 0px 0 0 15px;
+      }
+
       .name {
         font-weight: bold;
         text-transform: capitalize;
         font-size: 15px;
+
+        @media screen and (device-aspect-ratio: 2/3) {
+          font-size: 14px;
+        }
+
+        @media screen and (device-aspect-ratio: 40/71) {
+          font-size: 14px;
+        }
       }
 
       .location {
@@ -457,6 +480,18 @@ ul {
       max-width: 100%;
       height: 100%;
       margin-top: 0px;
+
+      @media screen and (device-aspect-ratio: 2/3) {
+        height: auto;
+        width: 93%;
+        margin-top: 09px;
+      }
+
+      @media screen and (device-aspect-ratio: 40/71) {
+        height: auto;
+        width: 93%;
+        margin-top: 25px;
+      }
     }
 
     .instinct {
@@ -764,9 +799,16 @@ ul {
 
   .report-signting-data {
     padding: 23px 0px 0px 0px;
+    @media screen and (device-aspect-ratio: 40/71) {
+      padding: 0px 0 0;
+    }
 
     p {
 
+      @media screen and (device-aspect-ratio: 40/71) {
+        font-size: 0.9rem;
+        margin: 1em 0px;
+      }
     }
 
     .show-pokemon {
@@ -775,14 +817,23 @@ ul {
 
       h2 {
         margin: 10px 0px 0px 0px;
+        @media screen and (device-aspect-ratio: 40/71) {
+          font-size: 1rem;
+        }
       }
 
       hr {
         margin: 9px 0px 9px 0px;
+        @media screen and (device-aspect-ratio: 40/71) {
+          display: block;
+        }
       }
 
       img {
         width: 47%;
+        @media screen and (device-aspect-ratio: 40/71) {
+          width: 44%;
+        }
       }
 
       .report-button {
@@ -795,295 +846,10 @@ ul {
         padding: 13px;
         font-size: 16px;
         margin-top: 19px;
-      }
-    }
-  }
-}
-
-
-// MEDIA QUERIES
-// iPhone 2G-4S in portrait
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
-  .arubinofaux {
-    .main {
-      .chat {
-        .messages {
-          height: 67%;
-        }
-      }
-
-      ul {
-        .pokemon-reported {
-          .poke-info {
-            max-width: 72%;
-            margin: 0px 0 0 15px;
-            .name {
-              font-size: 14px;
-            }
-          }
-        }
-      }
-
-      .select-team {
-        .teams {
-          img {
-            height: auto;
-            width: 93%;
-            margin-top: 09px
-          }
-        }
-      }
-
-      .lay-over {
-        .content {
-          .title {
-            font-size: 15px;
-            margin-top: 9px;
-          }
-          .the-lay-content {
-            .report-signting-data {
-              padding: 0px 0 0;
-              p {
-                font-size: 0.9rem;
-                margin: 0px 0px 4px 0px;
-              }
-              .show-pokemon {
-                hr {
-                  display: none;
-                }
-                h2 {
-                  font-size: 0.9rem;
-                }
-                img {
-                  width: 37%;
-                }
-                .report-button {
-                  font-size: 12px;
-                  margin: 1px auto 0;
-                  padding: 10px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// iPhone 5 & 5S in portrait
-@media only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) {
-  .arubinofaux {
-    .igorgue {
-      .main {
-        .chat {
-          .messages {
-            height: 73%;
-          }
-        }
-
-        ul {
-          .pokemon-reported {
-            .poke-info {
-              max-width: 72%;
-              margin: 0px 0 0 15px;
-              .name {
-                font-size: 14px;
-              }
-            }
-          }
-        }
-
-        .select-team {
-          .teams {
-            img {
-              height: auto;
-              width: 93%;
-              margin-top: 25px;
-            }
-          }
-        }
-
-        .lay-over {
-          .content {
-            .title {
-              font-size: 16px;
-              margin-top: 20px;
-            }
-            .the-lay-content {
-              .report-signting-data {
-                padding: 0px 0 0;
-                p {
-                  font-size: 0.9rem;
-                  margin: 1em 0px;
-                }
-                .show-pokemon {
-                  hr {
-                    display: block;
-                  }
-                  h2 {
-                    font-size: 1rem;
-                  }
-                  img {
-                    width: 44%;
-                  }
-                  .report-button {
-                    font-size: 13px;
-                    margin: 0 auto;
-                    padding: 13px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// iPhone 6 in portrait
-@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
-  .arubinofaux {
-    .igorgue {
-      .techno {
-        .main {
-          .chat {
-            .messages {
-              height: 79%;
-            }
-          }
-
-          ul {
-            .pokemon-reported {
-              .poke-info {
-                max-width: 77%;
-                margin: 9px 0px 0px 15px;
-                .name {
-                  font-size: 15px;
-                }
-              }
-            }
-          }
-
-          .select-team {
-            .teams {
-              img {
-                height: auto;
-                width: 93%;
-                margin-top: 33px;
-              }
-            }
-          }
-
-          .lay-over {
-            .content {
-              .title {
-                font-size: 17px;
-                margin-top: 36px;
-              }
-              .the-lay-content {
-                .report-signting-data {
-                  padding: 0px 0 0;
-                  p {
-                    font-size: 1rem;
-                    margin: 1em 0px;
-                  }
-                  .show-pokemon {
-                    hr {
-                      display: block;
-                    }
-                    h2 {
-                      font-size: 1.4rem;
-                    }
-                    img {
-                      width: 47%;
-                    }
-                    .report-button {
-                      font-size: 16px;
-                      margin: 0 auto;
-                      padding: 13px;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// iPhone 6 Plus in portrait
-@media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : portrait) {
-  .arubinofaux {
-    .igorgue {
-      .techno {
-        .acid {
-          .main {
-            .chat {
-              .messages {
-                height: 79%;
-              }
-            }
-
-            ul {
-              .pokemon-reported {
-                .poke-info {
-                  max-width: 77%;
-                  margin: 9px 0px 0px 15px;
-                  .name {
-                    font-size: 15px;
-                  }
-                }
-              }
-            }
-
-            .select-team {
-              .teams {
-                img {
-                  height: auto;
-                  width: 93%;
-                  margin-top: 33px;
-                }
-              }
-            }
-
-            .lay-over {
-              .content {
-                .title {
-                  font-size: 17px;
-                  margin-top: 36px;
-                }
-                .the-lay-content {
-                  .report-signting-data {
-                    padding: 0px 0 0;
-                    p {
-                      font-size: 1rem;
-                      margin: 1em 0px;
-                    }
-                    .show-pokemon {
-                      hr {
-                        display: block;
-                      }
-                      h2 {
-                        font-size: 1.4rem;
-                      }
-                      img {
-                        width: 47%;
-                      }
-                      .report-button {
-                        font-size: 16px;
-                        margin: 0 auto;
-                        padding: 13px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+        @media screen and (device-aspect-ratio: 40/71) {
+          font-size: 13px;
+          margin: 0 auto;
+          padding: 13px;
         }
       }
     }
