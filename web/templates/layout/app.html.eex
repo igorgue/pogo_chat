@@ -24,7 +24,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="dale-pokemon coje-pokemon">
     <div class="main">
       <div class="start-loading">
         <div id="loader"></div>
