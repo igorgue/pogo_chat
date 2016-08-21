@@ -76,5 +76,32 @@ $('.open-settings').click(function() {
   });
 });
 
+$('.open-tips').click(function() {
+  $('.lay-over .content .title').html("tips");
+  $('.lay-over .content .the-lay-content').html(`
+    <div class='tips-holder'>
+      <ul class='tips'>
+        <li>
+          <div class='tip-name'>
+            <h2>What is PoGoConnect?</h2>
+          </div>
+          <div class='answer'>
+            PoGoConnect is the best way to connect with other Pokemon GO players in your area. And discover Pokemon reported by the community!
+          </div>
+        </li>
+        <li>
+          <div class='tip-name'>
+            <h2>How does it work?</h2>
+          </div>
+          <div class='answer'>
+            magic
+          </div>
+        </li>
+      </ul>
+    </div>`);
+
+  $('.lay-over').show();
+});
+
 // Close keyboard
 $('.chat-box').on({ 'touchstart' : function(){ $('.message_input').blur() } });

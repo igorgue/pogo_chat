@@ -863,6 +863,33 @@ ul {
     }
   }
 
+  .tips-holder {
+
+    .tips {
+      margin: 0px;
+      padding: 0px;
+
+      li {
+        list-style: none;
+        border-bottom: 1px solid #333447;
+        padding-bottom: 8px;
+        margin-bottom: 11px;
+
+        .tip-name {
+          h2 {
+            margin: 0px;
+            font-size: 22px;
+          }
+        }
+
+        .answer {
+          margin: 0px 0px 0px 0px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
   .report-signting-data {
     padding: 23px 0px 0px 0px;
     // iphone 4
