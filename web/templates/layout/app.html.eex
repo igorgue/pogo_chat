@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="PoGoConnect is the best way to connect with other Pokemon GO players in your area. And discover Pokemon reported by the community!">
+    <meta name="keywords" content="pokemon, pogo, pogotoolkit, pogoconnect, pokemon chat, report pokemon">
 
     <title>PoGoConnect!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
