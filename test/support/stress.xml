@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/user/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="debug" version="1.0">
+  <clients>
+    <client host="phoenix1" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="phoenix2" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="phoenix3" cpu="4" use_controller_vm="false" maxusers="64000" />
+  </clients>
+
+  <servers>
+    <server host="server_ip_address" port="3000" type="tcp" />
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users maxnumber="100000" arrivalrate="1000" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
+
+  <sessions>
+    <session name="websocket" probability="100" type="ts_websocket">
+      <request>
+        <websocket type="connect" path="/socket/websocket"></websocket>
+      </request>
+
+      <request subst="true">
+          <websocket type="message">{"topic":"pogochat", "event":"phx_join", "payload": {"coords": {"lat": 25.804464, "long": -80.190024}, "ref":"1"}</websocket>
+        
+      </request>
+
+      <for var="i" from="1" to="50" incr="1">
+        <request subst="true">
+            <websocket type="message">{"topic":"pogochat", "event":"new_msg", "payload": {"coords": {"lat": 25.804464, "long": -80.190024}, "body": "test message", "uuid": "oh man"}, "ref":"1"}</websocket>
+        </request>
+      </for>
+
+      <for var="i" from="1" to="1000" incr="1">
+        <thinktime value="30"/>
+      </for>
+    </session>
+  </sessions>
+</tsung>
