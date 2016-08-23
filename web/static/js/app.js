@@ -96,7 +96,7 @@ $('.open-tips').click(function() {
             <h2>How does it work?</h2>
           </div>
           <div class='answer'>
-            magic
+            PoGoConnect uses your phone's location to let you connect with other trainers in a 1 mile radius from where your standing.
           </div>
         </li>
       </ul>

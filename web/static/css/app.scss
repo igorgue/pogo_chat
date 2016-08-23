@@ -867,7 +867,7 @@ ul {
 
     .tips {
       margin: 0px;
-      padding: 0px;
+      padding: 10px 0px 0px 0px;
 
       li {
         list-style: none;
@@ -878,13 +878,13 @@ ul {
         .tip-name {
           h2 {
             margin: 0px;
-            font-size: 22px;
+            font-size: 16px;
           }
         }
 
         .answer {
           margin: 0px 0px 0px 0px;
-          font-size: 14px;
+          font-size: 13px;
         }
       }
     }
