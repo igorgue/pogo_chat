@@ -150,13 +150,47 @@ geolocationService.getCurrentPosition(position => {
     messagesContainer.append(`<li class="this-is-pickachu message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to PoGoConnect :)</div></div></li>`)
 
     $('.message .avatar').on('click', function() {
-      $(".chat-thing").val(":"+$(this).data("username")+":")
+      var username = $(this).data("username")
+
+      // Setting value on chat box
+      $(".chat-thing").val(":" + username + ":")
       $(".chat-thing").focus()
+
+      trackEvent("Chat", "reply", username)
     })
   }
 
   function scrollDown() {
     messagesContainer.animate({scrollTop: messagesContainer.prop("scrollHeight")}, 500);
+  }
+
+  function trackSendMessageText(data) {
+    trackEvent("Chat", "new_msg")
+  }
+
+  function trackEvent(category, action, value = 0) {
+    if(value === 0) {
+      // Tracks the message we want to send
+      ga("send", {
+        hitType: "event",
+        eventCategory: category,
+        eventAction: action
+      })
+    } else {
+      ga("send", {
+        hitType: "event",
+        eventCategory: category,
+        eventAction: action,
+        eventValue: value
+      })
+    }
+  }
+
+  function sendMessage(data) {
+    // Send the message to the socket
+    channel.push("new_msg", data)
+
+    trackSendMessageText(data)
   }
 
   // Main input, when return is pressed
@@ -175,11 +209,7 @@ geolocationService.getCurrentPosition(position => {
         uuid: uuid
       }
 
-      channel.push("new_msg", data)
-      // chatInput.blur()
-
-      // clear the inpout
-      // chatInput.val("")
+      sendMessage(data)
     }
   })
 
@@ -192,8 +222,20 @@ geolocationService.getCurrentPosition(position => {
       uuid: uuid
     }
 
-    channel.push("new_msg", data)
+    sendMessage(data)
   });
+
+  $('.shop-gear-button').click(function() {
+    trackEvent("Settings", "shop_gear");
+  })
+
+  $('.setting-and-tips-link').click(function() {
+    trackEvent("Settings", "open_more_settings");
+  })
+
+  $('.pokeball-center').click(function() {
+    trackEvent("Settings", "open_settings");
+  })
 
   // Handle report sighting
   $(".report-signting").click(function() {
@@ -227,8 +269,15 @@ geolocationService.getCurrentPosition(position => {
         $('.show-pokemon').show()
         $('.selectize-input input').blur()
 
-        $(".report-button").on( "click", function() {
-          channel.push("seen", {coords: coords, pokemon: $(".report-button").data("reporting")})
+        $(".report-button").on("click", function() {
+          var seenData = {
+            coords: coords,
+            pokemon: $(".report-button").data("reporting")
+          }
+
+          channel.push("seen", seenData)
+          trackEvent("Settings", "seen", seenData.pokemon)
+
           $('.main-menu').hide()
           $('.lay-over').hide()
           $('.lay-over .content .title').html(" ");
@@ -276,8 +325,12 @@ geolocationService.getCurrentPosition(position => {
     messagesContainer.append(`<li class="message ${direction} appeared" data-time="${Date()}"><div class="avatar" data-username="${payload.username}" style="background: url('images/pokemons/${payload.username}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${payload.username}</div><div class="text">${body}</div></div></li>`)
 
     $('.message .avatar').on('click', function() {
-      chatInput.val(`:${$(this).data("username")}: `)
+      var username = $(this).data("username")
+
+      chatInput.val(`:${username}: `)
       chatInput.focus()
+
+      trackEvent("Chat", "reply", username)
     })
 
     // Save the reply
@@ -331,6 +384,8 @@ geolocationService.getCurrentPosition(position => {
   channel.on("nearby_users_count", payload => {
     nearbyUsersCount = payload["nearby_users_count"]
     userCount.html(nearbyUsersCount)
+
+    trackEvent("Chat", "nearby_users_count")
   })
 
   // When we get errors from the server

@@ -69,6 +69,8 @@ $('.open-settings').click(function() {
     database.commit()
     location.reload()
 
+    trackEvent("Settings", "clear_database");
+
     $('.main-menu').hide()
     $('.lay-over').hide()
     $('.lay-over .content .title').html(" ");
