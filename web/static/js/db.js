@@ -37,5 +37,12 @@ export var DB = {
   insert: function(database, table, payload) {
     database.insert(table, payload);
     database.commit();
+  },
+  insertmsg: function(database, table, payload) {
+    if (database.rowCount('reply') > 99) {
+      database.deleteRows("reply", {ID: database.queryAll('reply')[0].ID});
+    }
+    database.insert(table, payload);
+    database.commit();
   }
 }
