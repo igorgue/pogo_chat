@@ -146,8 +146,20 @@ geolocationService.getCurrentPosition(position => {
       }
       messagesContainer.append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
-    $('.this-is-pikachu').hide()
-    messagesContainer.append(`<li class="this-is-pickachu message left appeared"><div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">Pikachu</div><div class="text">Welcome to PoGoConnect :)</div></div></li>`)
+
+    $('.welcome-message').append(`
+      <div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div>
+      <div class="text_wrapper">
+        <div class="pokemon">Pikachu</div>
+        <div class="text">
+          Hi <i class="fa fa-smile-o" aria-hidden="true"></i>, PoGoConnect lets you connect with other trainers in your area, start by inviting some friends.
+          <div style="margin-top: 7px;">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//pogoconnect.com" target="_blank" style="margin-right: 12px;"><i class="fa fa-facebook-official fa-2x" aria-hidden="true" style="color: #3B5998;"></i></a>
+            <a href="https://twitter.com/home?status=Lets%20catch%20them%20all%20%40pogoconnect%20https%3A//pogoconnect.com" style="margin-right: 12px;"><i class="fa fa-twitter-square fa-2x" aria-hidden="true" style="color: #00aced;"></i></a>
+          </div>
+        </div>
+      </div>
+    `)
 
     $('.message .avatar').on('click', function() {
       var username = $(this).data("username")
