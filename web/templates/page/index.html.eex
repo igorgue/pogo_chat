@@ -16,7 +16,7 @@
 
 <div class="chat_window chat" style="display: none;">
   <div class="top_menu">
-    <div class="the-count"></div>
+    <div class="the-count">0</div>
     <div class="title">PoGoConnect!</div>
     <div class="">
       <a class="poke-button w-inline-block">
@@ -25,7 +25,15 @@
       </a>
     </div>
   </div>
-  <ul class="chat-box messages"></ul>
+  <ul class="chat-box messages">
+    <div class="tiralo-aqui">
+
+    </div>
+    <li class="inside-chat-ad">
+      <script type="text/javascript" src="https://ylx-3.com/banner.php?section=inside_chat&pub=758716&format=300x50&ga=g&https=1"></script>
+    </li>
+    <li class="this-is-pickachu message left appeared welcome-message"></li>
+  </ul>
   <div class="bottom_wrapper clearfix">
     <div class="message_input_wrapper">
       <form action="#" onsubmit="return false;">

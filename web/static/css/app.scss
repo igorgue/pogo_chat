@@ -179,6 +179,16 @@ a:visited {
   height: 79%;
   overflow: scroll;
 
+  .inside-chat-ad {
+    margin: 0px 0px 13px 0px;
+
+    iframe {
+      margin: 0 auto;
+      width: 300px;
+      display: block;
+    }
+  }
+
   // iphone 4
   @media screen and (device-aspect-ratio: 2/3) {
     height: 67%;

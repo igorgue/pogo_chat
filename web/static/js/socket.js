@@ -144,7 +144,7 @@ geolocationService.getCurrentPosition(position => {
       } else {
         var direction = "left"
       }
-      messagesContainer.prepend(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+      $('.tiralo-aqui').append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
 
     $('.welcome-message').html(`
@@ -348,7 +348,7 @@ geolocationService.getCurrentPosition(position => {
     })
 
     // Save the reply
-    DB.insert(database, "reply", {username: payload.username, content: payload.body, self: self})
+    DB.insertmsg(database, "reply", {username: payload.username, content: payload.body, self: self})
 
     scrollDown()
   })
