@@ -144,10 +144,10 @@ geolocationService.getCurrentPosition(position => {
       } else {
         var direction = "left"
       }
-      messagesContainer.append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+      messagesContainer.prepend(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
     })
 
-    $('.welcome-message').append(`
+    $('.welcome-message').html(`
       <div class="avatar" data-username="pikachu" style="background: url('images/pokemons/pikachu.png') no-repeat center;"></div>
       <div class="text_wrapper">
         <div class="pokemon">Pikachu</div>
