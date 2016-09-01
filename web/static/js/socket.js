@@ -145,6 +145,7 @@ geolocationService.getCurrentPosition(position => {
         var direction = "left"
       }
       $('.tiralo-aqui').append(`<li class="message ${direction} appeared"><div class="avatar" data-username="${item['username']}" style="background: url('images/pokemons/${item['username']}.png') no-repeat center;"></div><div class="text_wrapper"><div class="pokemon">${item['username']}</div><div class="text">${item['content']}</div></div></li>`)
+      scrollDown()
     })
 
     $('.welcome-message').html(`
