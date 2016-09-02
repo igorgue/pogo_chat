@@ -10,11 +10,12 @@ defmodule PogoChat.ChatChannel do
   @max_message_size 255
 
   defp initialize_socket(socket, payload) do
-    socket = assign socket, :coords, payload["coords"]
-    socket = assign socket, :uuid, UUID.uuid1
-    socket = assign socket, :pokemon, Enum.random Pokemon.all
-    socket = assign socket, :nearby_users_ids, []
-    socket = assign socket, :announced_ids, []
+    socket = socket
+    |> assign(:coords, payload["coords"])
+    |> assign(:uuid, UUID.uuid1)
+    |> assign(:pokemon, Enum.random Pokemon.all)
+    |> assign(:nearby_users_ids, [])
+    |> assign(:announced_ids, [])
 
     socket
   end
@@ -73,8 +74,10 @@ defmodule PogoChat.ChatChannel do
 
   def handle_in("announce_location", payload, socket) do
     socket = assign socket, :coords, payload["coords"]
-    payload = put_in payload["uuid"], socket.assigns.uuid
-    payload = put_in payload["pokemon"], socket.assigns.pokemon
+
+    payload = payload
+    |> put_in("uuid", socket.assigns.uuid)
+    |> put_in("pokemon", socket.assigns.pokemon)
 
     broadcast! socket, "announce_location", payload
 
