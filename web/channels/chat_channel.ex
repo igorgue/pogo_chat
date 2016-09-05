@@ -7,6 +7,7 @@ defmodule PogoChat.ChatChannel do
   alias PogoChat.Pokemon, as: Pokemon
 
   @close_by_distance 1000
+  @send_anyways true
   @max_message_size 255
 
   defp initialize_socket(socket, payload) do
@@ -76,8 +77,8 @@ defmodule PogoChat.ChatChannel do
     socket = assign socket, :coords, payload["coords"]
 
     payload = payload
-    |> put_in("uuid", socket.assigns.uuid)
-    |> put_in("pokemon", socket.assigns.pokemon)
+    |> put_in(["uuid"], socket.assigns.uuid)
+    |> put_in(["pokemon"], socket.assigns.pokemon)
 
     broadcast! socket, "announce_location", payload
 
@@ -103,7 +104,7 @@ defmodule PogoChat.ChatChannel do
     payload = put_in payload["distance_from_message"], distance
 
     # Send or not send the message
-    socket = if distance <= @close_by_distance do
+    socket = if distance <= @close_by_distance or @send_anyways do
       socket = assign socket, :nearby_users_ids, Enum.uniq socket.assigns.nearby_users_ids ++ [payload["uuid"]]
 
       payload = put_in payload["distance_from_message"], distance
